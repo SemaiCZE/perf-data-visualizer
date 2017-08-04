@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Perf Data Visualizer",
+  "name": "Performance Data Visualization Tool",
   "icons": [
     {
       "src": "favicon.ico",
