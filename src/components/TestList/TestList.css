@@ -13,6 +13,7 @@
 
 .Test-icon {
   cursor: pointer;
+  color: #0f8bff;
 }
 
 .Test-texts-col {
@@ -29,7 +30,7 @@
   color: grey;
 }
 
-.Test-loading {
+.Test-loading-failed {
   text-align: center;
   font-size: larger;
   line-height: 100px;

@@ -1,7 +1,8 @@
 export const statusTypes = {
   EMPTY: 'empty',
   LOADING: 'loading',
-  FULFILED: 'fulfiled'
+  FULFILED: 'fulfiled',
+  FAILED: 'failed'
 };
 
 export const createStateEntry = (s = statusTypes.EMPTY, d = null) => {
@@ -23,6 +24,8 @@ export const isLoading = entry =>
   !entry || entry.status === statusTypes.LOADING;
 export const isReady = entry =>
   !!entry && entry.status === statusTypes.FULFILED && !!entry.data;
+export const hasFailed = entry =>
+  !!entry && entry.status === statusTypes.FAILED;
 export const getJsData = entry => {
   const data = isReady(entry) ? entry.data : null;
   return data && data.toJS ? data.toJS() : data;

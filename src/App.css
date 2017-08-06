@@ -14,11 +14,13 @@ body {
 
 .App-header {
   text-align: center;
-  background-color: #222;
+  background-color: darkslategray;
   height: 70px;
   color: white;
   width: 100%;
   position: absolute;
+  box-shadow: 0px 6px 6px -4px #888;
+  z-index: 100;
 }
 
 .App-content {

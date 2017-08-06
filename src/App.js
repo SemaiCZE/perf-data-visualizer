@@ -15,6 +15,8 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import ResourceRenderer from './utils/ResourceRenderer';
 import TestList from './components/TestList/TestList';
 import LoadingTestList from './components/TestList/LoadingTestList';
+import FailedTestList from './components/TestList/FailedTestList';
+import AlertError from './components/Alert/Alert';
 
 class App extends Component {
   // ********************
@@ -30,9 +32,9 @@ class App extends Component {
     this.fetchTests();
   }
 
-  // *************
-  // Fetching data
-  // *************
+  // ***************************
+  // Fetching and modifying data
+  // ***************************
 
   fetchTests = () => {
     this.setState({
@@ -42,8 +44,14 @@ class App extends Component {
       this.setState({ tests: createStateEntry(statusTypes.FULFILED, data) });
     const onError = error =>
       this.setState({
-        tests: createStateEntry(statusTypes.EMPTY),
-        error: error
+        tests: createStateEntry(statusTypes.FAILED),
+        error: {
+          message: error.message,
+          refresh: () => {
+            this.clearError();
+            this.fetchTests();
+          }
+        }
       });
     apiFetchTests()(onSuccess, onError);
   };
@@ -63,10 +71,16 @@ class App extends Component {
     const onError = error =>
       this.setState((prevState, props) => {
         const newTestVersions = prevState.testVersions;
-        newTestVersions[testId] = createStateEntry(statusTypes.EMPTY);
+        newTestVersions[testId] = createStateEntry(statusTypes.FAILED);
         return {
           testVersions: newTestVersions,
-          error: error
+          error: {
+            message: error.message,
+            refresh: () => {
+              this.clearError();
+              this.fetchTestVersions(testId);
+            }
+          }
         };
       });
     apiFetchTestVersions(testId)(onSuccess, onError);
@@ -93,14 +107,22 @@ class App extends Component {
     const onError = error =>
       this.setState((prevState, props) => {
         const newTestValues = prevState.testValues;
-        newTestValues[testId][versionId] = createStateEntry(statusTypes.EMPTY);
+        newTestValues[testId][versionId] = createStateEntry(statusTypes.FAILED);
         return {
           testValues: newTestValues,
-          error: error
+          error: {
+            message: error.message,
+            refresh: () => {
+              this.clearError();
+              this.fetchTestValues(testId, versionId);
+            }
+          }
         };
       });
     apiFetchTestValues(testId, versionId)(onSuccess, onError);
   };
+
+  clearError = () => this.setState({ error: null });
 
   // ***********
   // Render page
@@ -119,9 +141,17 @@ class App extends Component {
             <ResourceRenderer
               resource={this.state.tests}
               loading={LoadingTestList}
+              failed={FailedTestList}
             >
               {tests => <TestList tests={tests} />}
             </ResourceRenderer>
+          </Col>
+          <Col xs={9} className="App-content-col">
+            {this.state.error &&
+              <AlertError
+                error={this.state.error}
+                onDismiss={this.clearError}
+              />}
           </Col>
         </Row>
       </Grid>
