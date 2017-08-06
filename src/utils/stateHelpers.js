@@ -18,6 +18,12 @@ export const initialState = {
   error: null
 };
 
-export const isEmpty = entry => entry.status === statusTypes.EMPTY;
-export const isLoading = entry => entry.status === statusTypes.LOADING;
-export const isReady = entry => entry.status === statusTypes.FULFILED;
+export const isEmpty = entry => !entry || entry.status === statusTypes.EMPTY;
+export const isLoading = entry =>
+  !entry || entry.status === statusTypes.LOADING;
+export const isReady = entry =>
+  !!entry && entry.status === statusTypes.FULFILED && !!entry.data;
+export const getJsData = entry => {
+  const data = isReady(entry) ? entry.data : null;
+  return data && data.toJS ? data.toJS() : data;
+};

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {
   apiFetchTests,
@@ -11,6 +10,10 @@ import {
   statusTypes,
   createStateEntry
 } from './utils/stateHelpers';
+import { Grid, Row, Col } from 'react-bootstrap';
+
+import ResourceRenderer from './utils/ResourceRenderer';
+import TestList from './components/TestList/TestList';
 
 class App extends Component {
   // ********************
@@ -22,7 +25,7 @@ class App extends Component {
     this.state = initialState;
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.fetchTests();
   }
 
@@ -38,7 +41,7 @@ class App extends Component {
       this.setState({ tests: createStateEntry(statusTypes.FULFILED, data) });
     const onError = error =>
       this.setState({
-        tests: createStateEntry(),
+        tests: createStateEntry(statusTypes.EMPTY),
         error: error
       });
     apiFetchTests()(onSuccess, onError);
@@ -59,7 +62,7 @@ class App extends Component {
     const onError = error =>
       this.setState((prevState, props) => {
         const newTestVersions = prevState.testVersions;
-        newTestVersions[testId] = createStateEntry();
+        newTestVersions[testId] = createStateEntry(statusTypes.EMPTY);
         return {
           testVersions: newTestVersions,
           error: error
@@ -89,7 +92,7 @@ class App extends Component {
     const onError = error =>
       this.setState((prevState, props) => {
         const newTestValues = prevState.testValues;
-        newTestValues[testId][versionId] = createStateEntry();
+        newTestValues[testId][versionId] = createStateEntry(statusTypes.EMPTY);
         return {
           testValues: newTestValues,
           error: error
@@ -104,15 +107,20 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Grid fluid className="App">
+        <Row className="App-header">
+          <Col lg={12}>
+            <h2>Performance Data Visualizer</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg={3} style={{ backgroundColor: 'grey' }}>
+            <ResourceRenderer resource={this.state.tests}>
+              {tests => <TestList tests={tests} />}
+            </ResourceRenderer>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
