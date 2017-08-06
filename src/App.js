@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
-import {
-  apiFetchTests,
-  apiFetchTestVersions,
-  apiFetchTestValues
-} from './utils/apiActions';
-import {
-  initialState,
-  statusTypes,
-  createStateEntry
-} from './utils/stateHelpers';
+import { initialState } from './utils/stateHelpers';
 import { Grid, Row, Col } from 'react-bootstrap';
 
+import {
+  stateFetchTests,
+  stateFetchTestVersions,
+  stateFetchTestValues,
+  stateClearError
+} from './utils/stateModifiers';
 import ResourceRenderer from './utils/ResourceRenderer';
 import TestList from './components/TestList/TestList';
 import LoadingTestList from './components/TestList/LoadingTestList';
@@ -36,93 +33,12 @@ class App extends Component {
   // Fetching and modifying data
   // ***************************
 
-  fetchTests = () => {
-    this.setState({
-      tests: createStateEntry(statusTypes.LOADING)
-    });
-    const onSuccess = data =>
-      this.setState({ tests: createStateEntry(statusTypes.FULFILED, data) });
-    const onError = error =>
-      this.setState({
-        tests: createStateEntry(statusTypes.FAILED),
-        error: {
-          message: error.message,
-          refresh: () => {
-            this.clearError();
-            this.fetchTests();
-          }
-        }
-      });
-    apiFetchTests()(onSuccess, onError);
-  };
-
-  fetchTestVersions = testId => {
-    this.setState((prevState, props) => {
-      const newTestVersions = prevState.testVersions;
-      newTestVersions[testId] = createStateEntry(statusTypes.LOADING);
-      return { testVersions: newTestVersions };
-    });
-    const onSuccess = data =>
-      this.setState((prevState, props) => {
-        const newTestVersions = prevState.testVersions;
-        newTestVersions[testId] = createStateEntry(statusTypes.FULFILED, data);
-        return { testVersions: newTestVersions };
-      });
-    const onError = error =>
-      this.setState((prevState, props) => {
-        const newTestVersions = prevState.testVersions;
-        newTestVersions[testId] = createStateEntry(statusTypes.FAILED);
-        return {
-          testVersions: newTestVersions,
-          error: {
-            message: error.message,
-            refresh: () => {
-              this.clearError();
-              this.fetchTestVersions(testId);
-            }
-          }
-        };
-      });
-    apiFetchTestVersions(testId)(onSuccess, onError);
-  };
-
-  fetchTestValues = (testId, versionId) => {
-    this.setState((prevState, props) => {
-      const newTestValues = prevState.testValues;
-      if (!newTestValues[testId]) {
-        newTestValues[testId] = {};
-      }
-      newTestValues[testId][versionId] = createStateEntry(statusTypes.LOADING);
-      return { testValues: newTestValues };
-    });
-    const onSuccess = data =>
-      this.setState((prevState, props) => {
-        const newTestValues = prevState.testValues;
-        newTestValues[testId][versionId] = createStateEntry(
-          statusTypes.FULFILED,
-          data
-        );
-        return { testValues: newTestValues };
-      });
-    const onError = error =>
-      this.setState((prevState, props) => {
-        const newTestValues = prevState.testValues;
-        newTestValues[testId][versionId] = createStateEntry(statusTypes.FAILED);
-        return {
-          testValues: newTestValues,
-          error: {
-            message: error.message,
-            refresh: () => {
-              this.clearError();
-              this.fetchTestValues(testId, versionId);
-            }
-          }
-        };
-      });
-    apiFetchTestValues(testId, versionId)(onSuccess, onError);
-  };
-
-  clearError = () => this.setState({ error: null });
+  fetchTests = stateFetchTests((...props) => this.setState(...props));
+  fetchTestVersions = stateFetchTestVersions((...props) =>
+    this.setState(...props)
+  );
+  fetchTestValues = stateFetchTestValues((...props) => this.setState(...props));
+  clearError = stateClearError((...props) => this.setState(...props));
 
   // ***********
   // Render page
