@@ -14,6 +14,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 import ResourceRenderer from './utils/ResourceRenderer';
 import TestList from './components/TestList/TestList';
+import LoadingTestList from './components/TestList/LoadingTestList';
 
 class App extends Component {
   // ********************
@@ -113,9 +114,12 @@ class App extends Component {
             <h2>Performance Data Visualizer</h2>
           </Col>
         </Row>
-        <Row>
-          <Col lg={3} style={{ backgroundColor: 'grey' }}>
-            <ResourceRenderer resource={this.state.tests}>
+        <Row className="App-content">
+          <Col xs={3} className="App-content-col Tests-col">
+            <ResourceRenderer
+              resource={this.state.tests}
+              loading={LoadingTestList}
+            >
               {tests => <TestList tests={tests} />}
             </ResourceRenderer>
           </Col>

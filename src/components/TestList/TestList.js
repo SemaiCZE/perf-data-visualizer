@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TestList = ({ tests }) =>
+import './TestList.css';
+import TestListItem from './TestListItem';
+
+const TestList = ({ tests = [] }) =>
   <div>
-    {tests.map((test, i) =>
-      <div key={i}>
-        {test.name}
-      </div>
-    )}
+    {tests.map((test, i) => <TestListItem key={i} test={test} />)}
   </div>;
 
 TestList.propTypes = {
-  tests: PropTypes.array.isRequired
+  tests: PropTypes.array
 };
 
 export default TestList;

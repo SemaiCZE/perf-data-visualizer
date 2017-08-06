@@ -1,0 +1,36 @@
+.Test-container {
+  height: 80px;
+  padding: 15px;
+}
+
+.Test-container:hover {
+  background-color: #f2f2f2;
+}
+
+.Test-icon-col {
+  line-height: 58px;
+}
+
+.Test-icon {
+  cursor: pointer;
+}
+
+.Test-texts-col {
+  margin-top: 5px;
+}
+
+.Test-title {
+  font-size: medium;
+}
+
+.Test-id {
+  font-style: italic;
+  font-size: small;
+  color: grey;
+}
+
+.Test-loading {
+  text-align: center;
+  font-size: larger;
+  line-height: 100px;
+}
