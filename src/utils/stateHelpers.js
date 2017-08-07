@@ -16,7 +16,8 @@ export const initialState = {
   tests: createStateEntry(),
   testVersions: {},
   testValues: {},
-  error: null
+  error: null,
+  activeTestId: null
 };
 
 export const isEmpty = entry => !entry || entry.status === statusTypes.EMPTY;

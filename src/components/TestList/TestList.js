@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './TestList.css';
 import TestListItem from './TestListItem';
 
-const TestList = ({ tests = [], commonState, fetchVersions }) =>
+const TestList = ({ tests = [], commonState, fetchVersions, setActiveTest }) =>
   <div>
     {tests.map((test, i) =>
       <TestListItem
@@ -12,6 +12,7 @@ const TestList = ({ tests = [], commonState, fetchVersions }) =>
         test={test}
         commonState={commonState}
         fetchVersions={() => fetchVersions(test.id)}
+        setActive={() => setActiveTest(test.id)}
       />
     )}
   </div>;
@@ -19,7 +20,8 @@ const TestList = ({ tests = [], commonState, fetchVersions }) =>
 TestList.propTypes = {
   tests: PropTypes.array,
   commonState: PropTypes.object,
-  fetchVersions: PropTypes.func
+  fetchVersions: PropTypes.func,
+  setActiveTest: PropTypes.func
 };
 
 export default TestList;

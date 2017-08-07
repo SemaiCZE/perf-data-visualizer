@@ -92,3 +92,6 @@ export const stateFetchTestValues = setState => (testId, versionId) => {
 };
 
 export const stateClearError = setState => () => setState({ error: null });
+
+export const stateSetActiveTest = setState => testId =>
+  setState({ activeTestId: testId });

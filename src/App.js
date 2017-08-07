@@ -7,13 +7,15 @@ import {
   stateFetchTests,
   stateFetchTestVersions,
   stateFetchTestValues,
-  stateClearError
+  stateClearError,
+  stateSetActiveTest
 } from './utils/stateModifiers';
 import ResourceRenderer from './utils/ResourceRenderer';
 import TestList from './components/TestList/TestList';
 import LoadingTestList from './components/TestList/LoadingTestList';
 import FailedTestList from './components/TestList/FailedTestList';
 import ErrorAlert from './components/Alert/Alert';
+import TestInfo from './components/TestInfo/TestInfo';
 
 class App extends Component {
   // ********************
@@ -39,6 +41,7 @@ class App extends Component {
   );
   fetchTestValues = stateFetchTestValues((...props) => this.setState(...props));
   clearError = stateClearError((...props) => this.setState(...props));
+  setActiveTest = stateSetActiveTest((...props) => this.setState(...props));
 
   // ***********
   // Render page
@@ -64,6 +67,7 @@ class App extends Component {
                   tests={tests}
                   commonState={this.state}
                   fetchVersions={this.fetchTestVersions}
+                  setActiveTest={this.setActiveTest}
                 />}
             </ResourceRenderer>
           </Col>
@@ -72,6 +76,13 @@ class App extends Component {
               <ErrorAlert
                 error={this.state.error}
                 onDismiss={this.clearError}
+              />}
+            {this.state.activeTestId &&
+              <TestInfo
+                test={this.state.tests.data.find(
+                  element => element.id === this.state.activeTestId
+                )}
+                onDismiss={() => this.setActiveTest(null)}
               />}
           </Col>
         </Row>

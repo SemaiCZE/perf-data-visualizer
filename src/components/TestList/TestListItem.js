@@ -15,33 +15,35 @@ class TestListItem extends Component {
     this.state = { folded: true };
   }
 
-  onUnfold() {
+  onUnfold(e) {
     const { fetchVersions } = this.props;
 
     fetchVersions();
     this.setState({ folded: false });
+    e.stopPropagation();
   }
 
-  onFold() {
+  onFold(e) {
     this.setState({ folded: true });
+    e.stopPropagation();
   }
 
   render() {
-    const { test, commonState } = this.props;
+    const { test, commonState, setActive } = this.props;
 
     return (
       <div className="Test-container">
-        <Row className="Test-container-row">
+        <Row className="Test-container-row" onClick={setActive}>
           <Col xs={1} className="Test-icon-col">
             {this.state.folded
               ? <PlusIcon
                   size="2x"
-                  onClick={() => this.onUnfold()}
+                  onClick={e => this.onUnfold(e)}
                   className="Test-icon"
                 />
               : <MinusIcon
                   size="2x"
-                  onClick={() => this.onFold()}
+                  onClick={e => this.onFold(e)}
                   className="Test-icon"
                 />}
           </Col>
@@ -72,7 +74,8 @@ class TestListItem extends Component {
 TestListItem.propTypes = {
   test: PropTypes.object.isRequired,
   commonState: PropTypes.object,
-  fetchVersions: PropTypes.func
+  fetchVersions: PropTypes.func,
+  setActive: PropTypes.func
 };
 
 export default TestListItem;
