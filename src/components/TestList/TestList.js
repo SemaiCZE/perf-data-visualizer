@@ -4,13 +4,22 @@ import PropTypes from 'prop-types';
 import './TestList.css';
 import TestListItem from './TestListItem';
 
-const TestList = ({ tests = [] }) =>
+const TestList = ({ tests = [], commonState, fetchVersions }) =>
   <div>
-    {tests.map((test, i) => <TestListItem key={i} test={test} />)}
+    {tests.map((test, i) =>
+      <TestListItem
+        key={i}
+        test={test}
+        commonState={commonState}
+        fetchVersions={() => fetchVersions(test.id)}
+      />
+    )}
   </div>;
 
 TestList.propTypes = {
-  tests: PropTypes.array
+  tests: PropTypes.array,
+  commonState: PropTypes.object,
+  fetchVersions: PropTypes.func
 };
 
 export default TestList;

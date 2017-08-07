@@ -1,0 +1,46 @@
+.Versions-container {
+  margin-left: 55px;
+}
+
+.Version-container-row {
+  height: 60px;
+  padding-top: 12px;
+  width: 100%;
+  margin: 0;
+}
+
+.Version-container-row:hover {
+  background-color: #f2f2f2;
+}
+
+.Version-icon {
+  color: #0f8bff;
+}
+
+.Version-title {
+  font-size: small;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.Version-timestamp {
+  font-size: small;
+  color: grey;
+  padding: 0;
+}
+
+.Version-load-button {
+  float: right;
+}
+
+.tooltip-inner {
+  max-width: 600px;
+}
+
+.Version-loading-failed {
+  text-align: center;
+  font-size: medium;
+  line-height: 50px;
+}

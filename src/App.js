@@ -13,7 +13,7 @@ import ResourceRenderer from './utils/ResourceRenderer';
 import TestList from './components/TestList/TestList';
 import LoadingTestList from './components/TestList/LoadingTestList';
 import FailedTestList from './components/TestList/FailedTestList';
-import AlertError from './components/Alert/Alert';
+import ErrorAlert from './components/Alert/Alert';
 
 class App extends Component {
   // ********************
@@ -59,12 +59,17 @@ class App extends Component {
               loading={LoadingTestList}
               failed={FailedTestList}
             >
-              {tests => <TestList tests={tests} />}
+              {tests =>
+                <TestList
+                  tests={tests}
+                  commonState={this.state}
+                  fetchVersions={this.fetchTestVersions}
+                />}
             </ResourceRenderer>
           </Col>
           <Col xs={9} className="App-content-col">
             {this.state.error &&
-              <AlertError
+              <ErrorAlert
                 error={this.state.error}
                 onDismiss={this.clearError}
               />}

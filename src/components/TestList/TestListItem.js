@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
+import ResourceRenderer from '../../utils/ResourceRenderer';
 import { PlusIcon, MinusIcon } from '../../icons';
+import VersionList from '../VersionList/VersionList';
+import FailedVersionList from '../VersionList/FailedVersionList';
+import LoadingVersionList from '../VersionList/LoadingVersionList';
 
 import './TestList.css';
 
@@ -11,28 +15,33 @@ class TestListItem extends Component {
     this.state = { folded: true };
   }
 
-  onFoldChange() {
-    this.setState((prevState, props) => {
-      return { folded: !prevState.folded };
-    });
+  onUnfold() {
+    const { fetchVersions } = this.props;
+
+    fetchVersions();
+    this.setState({ folded: false });
+  }
+
+  onFold() {
+    this.setState({ folded: true });
   }
 
   render() {
-    const { test } = this.props;
+    const { test, commonState } = this.props;
 
     return (
       <div className="Test-container">
-        <Row>
+        <Row className="Test-container-row">
           <Col xs={1} className="Test-icon-col">
             {this.state.folded
               ? <PlusIcon
                   size="2x"
-                  onClick={() => this.onFoldChange()}
+                  onClick={() => this.onUnfold()}
                   className="Test-icon"
                 />
               : <MinusIcon
                   size="2x"
-                  onClick={() => this.onFoldChange()}
+                  onClick={() => this.onFold()}
                   className="Test-icon"
                 />}
           </Col>
@@ -46,13 +55,24 @@ class TestListItem extends Component {
             </span>
           </Col>
         </Row>
+        {!this.state.folded &&
+          <ResourceRenderer
+            resource={commonState.testVersions[test.id]}
+            loading={LoadingVersionList}
+            failed={FailedVersionList}
+          >
+            {versions =>
+              <VersionList versions={versions} commonState={commonState} />}
+          </ResourceRenderer>}
       </div>
     );
   }
 }
 
 TestListItem.propTypes = {
-  test: PropTypes.object.isRequired
+  test: PropTypes.object.isRequired,
+  commonState: PropTypes.object,
+  fetchVersions: PropTypes.func
 };
 
 export default TestListItem;

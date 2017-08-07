@@ -1,14 +1,19 @@
 .Test-container {
-  height: 80px;
-  padding: 15px;
+  min-height: 80px;
 }
 
-.Test-container:hover {
+.Test-container-row {
+  padding: 15px;
+  width: 100%;
+  margin: 0;
+}
+
+.Test-container-row:hover {
   background-color: #f2f2f2;
 }
 
 .Test-icon-col {
-  line-height: 58px;
+  margin-top: 12px;
 }
 
 .Test-icon {
