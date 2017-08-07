@@ -40,3 +40,16 @@
   font-size: larger;
   line-height: 100px;
 }
+
+.Test-search-group {
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+.Test-search-inner,
+.Test-search-inner:focus,
+.Test-search-inner:hover {
+  background-color: #f2f2f2;
+  border: 1px solid #f2f2f2;
+  box-shadow: none;
+}

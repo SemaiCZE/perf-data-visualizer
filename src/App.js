@@ -11,7 +11,7 @@ import {
   stateSetActiveTest
 } from './utils/stateModifiers';
 import ResourceRenderer from './utils/ResourceRenderer';
-import TestList from './components/TestList/TestList';
+import SearchableTestList from './components/TestList/SearchableTestList';
 import LoadingTestList from './components/TestList/LoadingTestList';
 import FailedTestList from './components/TestList/FailedTestList';
 import ErrorAlert from './components/Alert/Alert';
@@ -64,7 +64,7 @@ class App extends Component {
               failed={FailedTestList}
             >
               {tests =>
-                <TestList
+                <SearchableTestList
                   tests={tests}
                   commonState={this.state}
                   fetchVersions={this.fetchTestVersions}
