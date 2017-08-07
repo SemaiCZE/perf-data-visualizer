@@ -3,7 +3,7 @@ import {
   apiFetchTestVersions,
   apiFetchTestValues
 } from './apiActions';
-import { statusTypes, createStateEntry } from './stateHelpers';
+import { statusTypes, createStateEntry, isReady } from './stateHelpers';
 
 export const stateFetchTests = setState => () => {
   setState({
@@ -53,6 +53,15 @@ export const stateFetchTestVersions = setState => testId => {
       };
     });
   apiFetchTestVersions(testId)(onSuccess, onError);
+};
+
+export const stateFetchTestVersionsIfNeeded = (
+  getState,
+  setState
+) => testId => {
+  if (!isReady(getState().testVersions[testId])) {
+    stateFetchTestVersions(setState)(testId);
+  }
 };
 
 export const stateFetchTestValues = setState => (testId, versionId) => {

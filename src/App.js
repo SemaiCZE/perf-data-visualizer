@@ -5,7 +5,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 import {
   stateFetchTests,
-  stateFetchTestVersions,
+  stateFetchTestVersionsIfNeeded,
   stateFetchTestValues,
   stateClearError,
   stateSetActiveTest
@@ -36,8 +36,9 @@ class App extends Component {
   // ***************************
 
   fetchTests = stateFetchTests((...props) => this.setState(...props));
-  fetchTestVersions = stateFetchTestVersions((...props) =>
-    this.setState(...props)
+  fetchTestVersions = stateFetchTestVersionsIfNeeded(
+    () => this.state,
+    (...props) => this.setState(...props)
   );
   fetchTestValues = stateFetchTestValues((...props) => this.setState(...props));
   clearError = stateClearError((...props) => this.setState(...props));
