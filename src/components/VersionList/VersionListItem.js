@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { isTestDataReady } from '../../utils/stateSelectors';
+import {
+  isTestDataReady,
+  isTestDataLoading,
+  hasTestDataFailed,
+  isTestDataEmpty
+} from '../../utils/stateSelectors';
 import { VersionIcon } from '../../icons';
 
 const VersionListItem = ({
@@ -41,23 +46,42 @@ const VersionListItem = ({
               : new Date(version.timestamp * 1000).toLocaleString()}
           </Col>
           <Col xs={4}>
-            {isTestDataReady(commonState, testId, version.id)
-              ? <Button
-                  bsSize="xsmall"
-                  bsStyle="danger"
-                  className="Version-load-button"
-                  onClick={removeValues}
-                >
-                  Remove
-                </Button>
-              : <Button
-                  bsSize="xsmall"
-                  bsStyle="primary"
-                  className="Version-load-button"
-                  onClick={fetchValues}
-                >
-                  Load
-                </Button>}
+            {isTestDataReady(commonState, testId, version.id) &&
+              <Button
+                bsSize="xsmall"
+                bsStyle="danger"
+                className="Version-load-button"
+                onClick={removeValues}
+              >
+                Remove
+              </Button>}
+            {isTestDataLoading(commonState, testId, version.id) &&
+              <Button
+                bsSize="xsmall"
+                bsStyle="primary"
+                className="Version-load-button"
+                disabled
+              >
+                Loading ...
+              </Button>}
+            {hasTestDataFailed(commonState, testId, version.id) &&
+              <Button
+                bsSize="xsmall"
+                bsStyle="warning"
+                className="Version-load-button"
+                onClick={fetchValues}
+              >
+                Loading failed, try again
+              </Button>}
+            {isTestDataEmpty(commonState, testId, version.id) &&
+              <Button
+                bsSize="xsmall"
+                bsStyle="primary"
+                className="Version-load-button"
+                onClick={fetchValues}
+              >
+                Load
+              </Button>}
           </Col>
         </Row>
       </Col>
