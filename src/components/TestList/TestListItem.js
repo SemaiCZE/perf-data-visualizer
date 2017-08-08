@@ -30,10 +30,14 @@ class TestListItem extends Component {
 
   render() {
     const { test, commonState, setActive } = this.props;
+    var rowClass = 'Test-container-row';
+    if (commonState.activeTestId === test.id) {
+      rowClass += ' Test-active';
+    }
 
     return (
       <div className="Test-container">
-        <Row className="Test-container-row" onClick={setActive}>
+        <Row className={rowClass} onClick={setActive}>
           <Col xs={1} className="Test-icon-col">
             {this.state.folded
               ? <PlusIcon
