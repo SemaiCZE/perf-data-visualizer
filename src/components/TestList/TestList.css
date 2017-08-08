@@ -6,6 +6,8 @@
   padding: 15px;
   width: 100%;
   margin: 0;
+  padding-right: 0;
+  display: flex;
 }
 
 .Test-container-row:hover {
@@ -27,6 +29,10 @@
 
 .Test-texts-col {
   margin-top: 5px;
+  padding-right: 0;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Test-title {

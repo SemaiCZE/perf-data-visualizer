@@ -63,7 +63,7 @@ class App extends Component {
           </Col>
         </Row>
         <Row className="App-content">
-          <Col xs={3} className="App-content-col Tests-col">
+          <Col xs={4} lg={3} className="App-content-col Tests-col">
             <ResourceRenderer
               resource={this.state.tests}
               loading={LoadingTestList}
@@ -80,7 +80,7 @@ class App extends Component {
                 />}
             </ResourceRenderer>
           </Col>
-          <Col xs={9} className="App-content-col">
+          <Col xs={8} lg={9} className="App-content-col">
             {this.state.error &&
               <ErrorAlert
                 error={this.state.error}

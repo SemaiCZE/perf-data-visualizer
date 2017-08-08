@@ -22,7 +22,7 @@ const VersionListItem = ({
       <Col xs={1}>
         <VersionIcon className="Version-icon" />
       </Col>
-      <Col xs={11}>
+      <Col xs={11} className="Version-list-col">
         <Row>
           <OverlayTrigger
             placement="right"

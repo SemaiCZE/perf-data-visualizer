@@ -7,6 +7,7 @@
   padding-top: 12px;
   width: 100%;
   margin: 0;
+  display: flex;
 }
 
 .Version-container-row:hover {
@@ -15,6 +16,10 @@
 
 .Version-icon {
   color: #0f8bff;
+}
+
+.Version-list-col {
+  overflow: hidden;
 }
 
 .Version-title {
