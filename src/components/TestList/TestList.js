@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 import './TestList.css';
 import TestListItem from './TestListItem';
 
-const TestList = ({ tests = [], commonState, fetchVersions, setActiveTest }) =>
+const TestList = ({
+  tests = [],
+  commonState,
+  fetchVersions,
+  fetchValues,
+  removeValues,
+  setActiveTest
+}) =>
   <div>
     {tests.map((test, i) =>
       <TestListItem
@@ -12,6 +19,8 @@ const TestList = ({ tests = [], commonState, fetchVersions, setActiveTest }) =>
         test={test}
         commonState={commonState}
         fetchVersions={() => fetchVersions(test.id)}
+        fetchValues={versionId => fetchValues(test.id, versionId)}
+        removeValues={versionId => removeValues(test.id, versionId)}
         setActive={() => setActiveTest(test.id)}
       />
     )}
@@ -21,6 +30,8 @@ TestList.propTypes = {
   tests: PropTypes.array,
   commonState: PropTypes.object,
   fetchVersions: PropTypes.func,
+  fetchValues: PropTypes.func,
+  removeValues: PropTypes.func,
   setActiveTest: PropTypes.func
 };
 

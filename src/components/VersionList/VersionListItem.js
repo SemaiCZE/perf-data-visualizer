@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
+import { isTestDataReady } from '../../utils/stateSelectors';
 import { VersionIcon } from '../../icons';
 
-const VersionListItem = ({ version }) =>
+const VersionListItem = ({
+  testId,
+  version,
+  commonState,
+  fetchValues,
+  removeValues
+}) =>
   <div>
     <Row className="Version-container-row">
       <Col xs={1}>
@@ -34,13 +41,23 @@ const VersionListItem = ({ version }) =>
               : new Date(version.timestamp * 1000).toLocaleString()}
           </Col>
           <Col xs={4}>
-            <Button
-              bsSize="xsmall"
-              bsStyle="primary"
-              className="Version-load-button"
-            >
-              Load
-            </Button>
+            {isTestDataReady(commonState, testId, version.id)
+              ? <Button
+                  bsSize="xsmall"
+                  bsStyle="danger"
+                  className="Version-load-button"
+                  onClick={removeValues}
+                >
+                  Remove
+                </Button>
+              : <Button
+                  bsSize="xsmall"
+                  bsStyle="primary"
+                  className="Version-load-button"
+                  onClick={fetchValues}
+                >
+                  Load
+                </Button>}
           </Col>
         </Row>
       </Col>
@@ -48,7 +65,11 @@ const VersionListItem = ({ version }) =>
   </div>;
 
 VersionListItem.propTypes = {
-  version: PropTypes.object.isRequired
+  testId: PropTypes.string.isRequired,
+  version: PropTypes.object.isRequired,
+  commonState: PropTypes.object,
+  fetchValues: PropTypes.func,
+  removeValues: PropTypes.func
 };
 
 export default VersionListItem;

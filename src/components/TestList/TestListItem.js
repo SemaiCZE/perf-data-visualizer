@@ -29,7 +29,13 @@ class TestListItem extends Component {
   }
 
   render() {
-    const { test, commonState, setActive } = this.props;
+    const {
+      test,
+      commonState,
+      setActive,
+      fetchValues,
+      removeValues
+    } = this.props;
     var rowClass = 'Test-container-row';
     if (commonState.activeTestId === test.id) {
       rowClass += ' Test-active';
@@ -68,7 +74,13 @@ class TestListItem extends Component {
             failed={FailedVersionList}
           >
             {versions =>
-              <VersionList versions={versions} commonState={commonState} />}
+              <VersionList
+                testId={test.id}
+                versions={versions}
+                commonState={commonState}
+                fetchValues={fetchValues}
+                removeValues={removeValues}
+              />}
           </ResourceRenderer>}
       </div>
     );
@@ -79,6 +91,8 @@ TestListItem.propTypes = {
   test: PropTypes.object.isRequired,
   commonState: PropTypes.object,
   fetchVersions: PropTypes.func,
+  fetchValues: PropTypes.func,
+  removeValues: PropTypes.func,
   setActive: PropTypes.func
 };
 

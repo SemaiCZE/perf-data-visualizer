@@ -38,6 +38,8 @@ class SearchableTestList extends Component {
       tests = [],
       commonState,
       fetchVersions,
+      fetchValues,
+      removeValues,
       setActiveTest
     } = this.props;
 
@@ -75,6 +77,8 @@ class SearchableTestList extends Component {
           tests={this.state.visibleTests}
           commonState={commonState}
           fetchVersions={fetchVersions}
+          fetchValues={fetchValues}
+          removeValues={removeValues}
           setActiveTest={setActiveTest}
         />
       </div>
@@ -86,6 +90,8 @@ SearchableTestList.propTypes = {
   tests: PropTypes.array,
   commonState: PropTypes.object,
   fetchVersions: PropTypes.func,
+  fetchValues: PropTypes.func,
+  removeValues: PropTypes.func,
   setActiveTest: PropTypes.func
 };
 

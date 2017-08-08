@@ -100,6 +100,17 @@ export const stateFetchTestValues = setState => (testId, versionId) => {
   apiFetchTestValues(testId, versionId)(onSuccess, onError);
 };
 
+export const stateRemoveTestValues = setState => (testId, versionId) => {
+  setState((prevState, props) => {
+    const newTestValues = prevState.testValues;
+    if (!newTestValues[testId]) {
+      newTestValues[testId] = {};
+    }
+    newTestValues[testId][versionId] = createStateEntry(statusTypes.EMPTY);
+    return { testValues: newTestValues };
+  });
+};
+
 export const stateClearError = setState => () => setState({ error: null });
 
 export const stateSetActiveTest = setState => testId =>

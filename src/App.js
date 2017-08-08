@@ -7,6 +7,7 @@ import {
   stateFetchTests,
   stateFetchTestVersionsIfNeeded,
   stateFetchTestValues,
+  stateRemoveTestValues,
   stateClearError,
   stateSetActiveTest
 } from './utils/stateModifiers';
@@ -41,6 +42,9 @@ class App extends Component {
     (...props) => this.setState(...props)
   );
   fetchTestValues = stateFetchTestValues((...props) => this.setState(...props));
+  removeTestValues = stateRemoveTestValues((...props) =>
+    this.setState(...props)
+  );
   clearError = stateClearError((...props) => this.setState(...props));
   setActiveTest = stateSetActiveTest((...props) => this.setState(...props));
 
@@ -69,6 +73,8 @@ class App extends Component {
                   commonState={this.state}
                   fetchVersions={this.fetchTestVersions}
                   setActiveTest={this.setActiveTest}
+                  fetchValues={this.fetchTestValues}
+                  removeValues={this.removeTestValues}
                 />}
             </ResourceRenderer>
           </Col>
