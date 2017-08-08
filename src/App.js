@@ -11,12 +11,14 @@ import {
   stateClearError,
   stateSetActiveTest
 } from './utils/stateModifiers';
+import { getLoadedValues } from './utils/stateSelectors';
 import ResourceRenderer from './utils/ResourceRenderer';
 import SearchableTestList from './components/TestList/SearchableTestList';
 import LoadingTestList from './components/TestList/LoadingTestList';
 import FailedTestList from './components/TestList/FailedTestList';
 import ErrorAlert from './components/Alert/Alert';
 import TestInfo from './components/TestInfo/TestInfo';
+import LoadedValuesList from './components/LoadedValuesList/LoadedValuesList';
 
 class App extends Component {
   // ********************
@@ -91,6 +93,11 @@ class App extends Component {
                 )}
                 onDismiss={() => this.setActiveTest(null)}
               />}
+
+            <LoadedValuesList
+              values={getLoadedValues(this.state)}
+              onDelete={this.removeTestValues}
+            />
           </Col>
         </Row>
       </Grid>

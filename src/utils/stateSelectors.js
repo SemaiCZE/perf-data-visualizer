@@ -12,4 +12,16 @@ export const hasTestDataFailed = isTestDataSomething(hasFailed);
 export const isTestDataEmpty = (state, testId, versionId) =>
   !state.testValues[testId] ||
   !state.testValues[testId][versionId] ||
-  isTestDataSomething(isEmpty)(state, testId, versionId);
+  isEmpty(state.testValues[testId][versionId]);
+
+export const getLoadedValues = state => {
+  const tests = [];
+  for (const testId in state.testValues) {
+    for (const versionId in state.testValues[testId]) {
+      if (isReady(state.testValues[testId][versionId])) {
+        tests.push({ testId, versionId });
+      }
+    }
+  }
+  return tests;
+};
