@@ -1,4 +1,10 @@
-import { isReady, isLoading, hasFailed, isEmpty } from './stateHelpers';
+import {
+  isReady,
+  isLoading,
+  hasFailed,
+  isEmpty,
+  getJsData
+} from './stateHelpers';
 
 const isTestDataSomething = func => (state, testId, versionId) =>
   state.testValues &&
@@ -20,6 +26,22 @@ export const getLoadedValues = state => {
     for (const versionId in state.testValues[testId]) {
       if (isReady(state.testValues[testId][versionId])) {
         tests.push({ testId, versionId });
+      }
+    }
+  }
+  return tests;
+};
+
+export const getLoadedValuesData = state => {
+  const tests = [];
+  for (const testId in state.testValues) {
+    for (const versionId in state.testValues[testId]) {
+      if (isReady(state.testValues[testId][versionId])) {
+        tests.push({
+          testId,
+          versionId,
+          ...getJsData(state.testValues[testId][versionId])
+        });
       }
     }
   }

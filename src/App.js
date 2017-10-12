@@ -11,7 +11,7 @@ import {
   stateClearError,
   stateSetActiveTest
 } from './utils/stateModifiers';
-import { getLoadedValues } from './utils/stateSelectors';
+import { getLoadedValues, getLoadedValuesData } from './utils/stateSelectors';
 import ResourceRenderer from './utils/ResourceRenderer';
 import SearchableTestList from './components/TestList/SearchableTestList';
 import LoadingTestList from './components/TestList/LoadingTestList';
@@ -19,6 +19,7 @@ import FailedTestList from './components/TestList/FailedTestList';
 import ErrorAlert from './components/Alert/Alert';
 import TestInfo from './components/TestInfo/TestInfo';
 import LoadedValuesList from './components/LoadedValuesList/LoadedValuesList';
+import GraphWrapper from './components/GraphWrapper/GraphWrapper';
 
 class App extends Component {
   // ********************
@@ -69,7 +70,7 @@ class App extends Component {
               loading={LoadingTestList}
               failed={FailedTestList}
             >
-              {tests =>
+              {tests => (
                 <SearchableTestList
                   tests={tests}
                   commonState={this.state}
@@ -77,22 +78,28 @@ class App extends Component {
                   setActiveTest={this.setActiveTest}
                   fetchValues={this.fetchTestValues}
                   removeValues={this.removeTestValues}
-                />}
+                />
+              )}
             </ResourceRenderer>
           </Col>
           <Col xs={8} lg={9} className="App-content-col">
-            {this.state.error &&
-              <ErrorAlert
-                error={this.state.error}
-                onDismiss={this.clearError}
-              />}
-            {this.state.activeTestId &&
-              <TestInfo
-                test={this.state.tests.data.find(
-                  element => element.id === this.state.activeTestId
-                )}
-                onDismiss={() => this.setActiveTest(null)}
-              />}
+            <div style={{ paddingBottom: '70px' }}>
+              {this.state.error && (
+                <ErrorAlert
+                  error={this.state.error}
+                  onDismiss={this.clearError}
+                />
+              )}
+              {this.state.activeTestId && (
+                <TestInfo
+                  test={this.state.tests.data.find(
+                    element => element.id === this.state.activeTestId
+                  )}
+                  onDismiss={() => this.setActiveTest(null)}
+                />
+              )}
+              <GraphWrapper values={getLoadedValuesData(this.state)} />
+            </div>
 
             <LoadedValuesList
               values={getLoadedValues(this.state)}
