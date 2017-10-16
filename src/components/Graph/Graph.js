@@ -12,13 +12,26 @@ class Graph extends Component {
   componentWillReceiveProps(newProps) {
     const { type, data } = newProps;
 
-    const plotData = data.map(item => ({
-      x0: 1,
-      dx: 1,
-      y: item.y,
-      type: type,
-      name: item.name
-    }));
+    const plotData = data.map((item, index) => {
+      let data = {};
+      if (type === 'scatter') {
+        data.x0 = 1;
+        data.dx = 1;
+        data.y = item.values;
+      } else if (type === 'histogram') {
+        data.x = item.values;
+        data.nbinsx = 50;
+      } else if (type === 'box') {
+        data.x0 = index;
+        data.y = item.values;
+      }
+
+      return {
+        type: type,
+        name: item.name,
+        ...data
+      };
+    });
 
     Plotly.newPlot(
       'plot',
@@ -31,6 +44,11 @@ class Graph extends Component {
         },
         xaxis: {
           gridcolor: 'transparent'
+        },
+        showlegend: true,
+        legend: {
+          x: 0,
+          y: 100
         }
       },
       {
