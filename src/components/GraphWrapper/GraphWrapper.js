@@ -9,13 +9,23 @@ import {
 } from 'react-bootstrap';
 import Graph from '../Graph/Graph';
 
+const getTimestamp = versionId => {
+  const dashIndex = versionId.indexOf('-');
+  if (dashIndex < 0) {
+    return 0;
+  }
+  return Number(versionId.substring(0, dashIndex));
+};
+
 class GraphWrapper extends Component {
-  state = { splitRuns: false, graphType: 'scatter' };
+  state = { splitRuns: false, graphType: 'scatter', maxBins: 50 };
 
   prepareNormalData(data) {
     return data.map(item => ({
       name: `${item.testId} - ${item.versionId}`,
-      values: [].concat.apply([], item.data)
+      values: [].concat.apply([], item.data),
+      units: item.units,
+      timestamp: getTimestamp(item.versionId)
     }));
   }
 
@@ -26,7 +36,9 @@ class GraphWrapper extends Component {
       for (let i = 0; i < item.data.length; i++) {
         result.push({
           name: `${item.testId} - ${item.versionId} - run ${i}`,
-          values: item.data[i]
+          values: item.data[i],
+          units: item.units,
+          timestamp: getTimestamp(item.versionId)
         });
       }
     }
@@ -39,6 +51,21 @@ class GraphWrapper extends Component {
     return (
       <div className="responsive-plot-container">
         <Form inline className="pull-right">
+          {this.state.graphType === 'histogram' && (
+            <FormGroup>
+              <ControlLabel>Max bins:</ControlLabel>
+              &nbsp;
+              <FormControl
+                componentClass="input"
+                type="number"
+                min="1"
+                defaultValue={this.state.maxBins}
+                onChange={e => this.setState({ maxBins: e.target.value })}
+                style={{ width: '80px' }}
+              />
+            </FormGroup>
+          )}
+          &nbsp;&nbsp;&nbsp;&nbsp;
           <FormGroup>
             <ControlLabel>Split runs:</ControlLabel>
             &nbsp;
@@ -68,6 +95,7 @@ class GraphWrapper extends Component {
               : this.prepareNormalData(data)
           }
           type={this.state.graphType}
+          maxBins={this.state.maxBins}
         />
       </div>
     );
