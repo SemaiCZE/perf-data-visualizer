@@ -45,43 +45,43 @@ class TestListItem extends Component {
       <div className="Test-container">
         <Row className={rowClass} onClick={setActive}>
           <Col xs={1} className="Test-icon-col">
-            {this.state.folded
-              ? <PlusIcon
-                  size="2x"
-                  onClick={e => this.onUnfold(e)}
-                  className="Test-icon"
-                />
-              : <MinusIcon
-                  size="2x"
-                  onClick={e => this.onFold(e)}
-                  className="Test-icon"
-                />}
+            {this.state.folded ? (
+              <PlusIcon
+                size="2x"
+                onClick={e => this.onUnfold(e)}
+                className="Test-icon"
+              />
+            ) : (
+              <MinusIcon
+                size="2x"
+                onClick={e => this.onFold(e)}
+                className="Test-icon"
+              />
+            )}
           </Col>
           <Col xs={11} className="Test-texts-col">
-            <span className="Test-title">
-              {test.name}
-            </span>
+            <span className="Test-title">{test.name}</span>
             <br />
-            <span className="Test-id">
-              {test.id}
-            </span>
+            <span className="Test-id">{test.id}</span>
           </Col>
         </Row>
-        {!this.state.folded &&
+        {!this.state.folded && (
           <ResourceRenderer
             resource={commonState.testVersions[test.id]}
             loading={LoadingVersionList}
             failed={FailedVersionList}
           >
-            {versions =>
+            {versions => (
               <VersionList
                 testId={test.id}
-                versions={versions}
+                versions={versions.sort((a, b) => b.timestamp - a.timestamp)}
                 commonState={commonState}
                 fetchValues={fetchValues}
                 removeValues={removeValues}
-              />}
-          </ResourceRenderer>}
+              />
+            )}
+          </ResourceRenderer>
+        )}
       </div>
     );
   }

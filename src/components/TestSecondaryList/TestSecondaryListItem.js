@@ -10,13 +10,7 @@ import {
 } from '../../utils/stateSelectors';
 import { VersionIcon } from '../../icons';
 
-const VersionListItem = ({
-  testId,
-  version,
-  commonState,
-  fetchValues,
-  removeValues
-}) => (
+const TestSecondaryListItem = ({ versionId, test }) => (
   <div>
     <Row className="Version-container-row">
       <Col xs={1}>
@@ -26,24 +20,18 @@ const VersionListItem = ({
         <Row>
           <OverlayTrigger
             placement="right"
-            overlay={<Tooltip id="tooltip">{version.id}</Tooltip>}
+            overlay={<Tooltip id="tooltip">{test.id}</Tooltip>}
           >
             <Col className="Version-title">
-              <span>
-                {version.id.indexOf('-') > 0
-                  ? version.id.substring(version.id.indexOf('-') + 1)
-                  : version.id}
-              </span>
+              <span>{test.name}</span>
             </Col>
           </OverlayTrigger>
         </Row>
         <Row>
           <Col xs={8} className="Version-timestamp">
-            {version.timestamp === 0
-              ? '–'
-              : new Date(version.timestamp * 1000).toLocaleString()}
+            {test.id}
           </Col>
-          <Col xs={4}>
+          {/*<Col xs={4}>
             {isTestDataReady(commonState, testId, version.id) && (
               <Button
                 bsSize="xsmall"
@@ -84,19 +72,13 @@ const VersionListItem = ({
                 Load
               </Button>
             )}
-          </Col>
+          </Col>*/}
         </Row>
       </Col>
     </Row>
   </div>
 );
 
-VersionListItem.propTypes = {
-  testId: PropTypes.string.isRequired,
-  version: PropTypes.object.isRequired,
-  commonState: PropTypes.object,
-  fetchValues: PropTypes.func,
-  removeValues: PropTypes.func
-};
+TestSecondaryListItem.propTypes = {};
 
-export default VersionListItem;
+export default TestSecondaryListItem;

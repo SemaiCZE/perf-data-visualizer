@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, FormGroup, FormControl, InputGroup } from 'react-bootstrap';
+import {
+  Button,
+  ButtonGroup,
+  FormGroup,
+  FormControl,
+  InputGroup
+} from 'react-bootstrap';
 
 import './TestList.css';
 import TestList from './TestList';
+import VersionPrimaryList from '../VersionPrimaryList/VersionPrimaryList';
 import { SearchIcon } from '../../icons';
 
 class SearchableTestList extends Component {
+  state = { versionsFirst: false };
+
   componentWillMount() {
     this.query = '';
     this.setState({ visibleTests: [] });
@@ -20,6 +29,14 @@ class SearchableTestList extends Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       visibleTests: nextProps.tests
+    });
+  }
+
+  testVersionChange(versionsFirst) {
+    this.setState((prevState, props) => {
+      return {
+        versionsFirst: versionsFirst
+      };
     });
   }
 
@@ -43,8 +60,34 @@ class SearchableTestList extends Component {
       setActiveTest
     } = this.props;
 
+    const groupButtonClass = 'groupButton';
+    const groupButtonActiveClass = `${groupButtonClass} groupButtonActive`;
+
     return (
       <div>
+        <ButtonGroup className="testVersionGroup">
+          <Button
+            className={
+              this.state.versionsFirst
+                ? groupButtonClass
+                : groupButtonActiveClass
+            }
+            onClick={() => this.testVersionChange(false)}
+          >
+            Tests
+          </Button>
+          <Button
+            className={
+              this.state.versionsFirst
+                ? groupButtonActiveClass
+                : groupButtonClass
+            }
+            onClick={() => this.testVersionChange(true)}
+          >
+            Versions
+          </Button>
+        </ButtonGroup>
+
         <form style={{ padding: '10px' }}>
           <FormGroup className="Test-search-group">
             <InputGroup>
@@ -73,14 +116,24 @@ class SearchableTestList extends Component {
             </InputGroup>
           </FormGroup>
         </form>
-        <TestList
-          tests={this.state.visibleTests}
-          commonState={commonState}
-          fetchVersions={fetchVersions}
-          fetchValues={fetchValues}
-          removeValues={removeValues}
-          setActiveTest={setActiveTest}
-        />
+
+        {!this.state.versionsFirst && (
+          <TestList
+            tests={this.state.visibleTests}
+            commonState={commonState}
+            fetchVersions={fetchVersions}
+            fetchValues={fetchValues}
+            removeValues={removeValues}
+            setActiveTest={setActiveTest}
+          />
+        )}
+        {this.state.versionsFirst && (
+          <VersionPrimaryList
+            tests={tests}
+            commonState={commonState}
+            fetchVersions={fetchVersions}
+          />
+        )}
       </div>
     );
   }
