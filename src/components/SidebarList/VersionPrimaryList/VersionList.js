@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ResourceRenderer from '../../utils/ResourceRenderer';
-import VersionPrimaryListItem from './VersionPrimaryListItem';
+import ResourceRenderer from '../../../utils/ResourceRenderer';
+import VersionListItem from './VersionListItem';
 
-class VersionPrimaryList extends Component {
+class VersionList extends Component {
   componentDidMount() {
     const { tests, fetchVersions } = this.props;
     tests.map(test => fetchVersions(test.id));
   }
 
   render() {
-    const { tests, commonState } = this.props;
+    const { tests, commonState, query, fetchValues, removeValues } = this.props;
 
     const allTestsVersions = tests.reduce(
       (acc, test) => acc.concat(commonState.testVersions[test.id]),
@@ -33,14 +33,21 @@ class VersionPrimaryList extends Component {
           return (
             <div>
               {testVersions
+                .filter(
+                  version =>
+                    version.id
+                      .toLocaleLowerCase()
+                      .search(query.toLocaleLowerCase()) !== -1
+                )
                 .sort((a, b) => b.timestamp - a.timestamp)
                 .map((version, i) => (
-                  <VersionPrimaryListItem
+                  <VersionListItem
                     key={i}
                     version={version}
                     tests={versionTestTree[version.id]}
-                    //fetchValues={versionId => fetchValues(test.id, versionId)}
-                    //removeValues={versionId => removeValues(test.id, versionId)}
+                    commonState={commonState}
+                    fetchValues={testId => fetchValues(testId, version.id)}
+                    removeValues={testId => removeValues(testId, version.id)}
                   />
                 ))}
             </div>
@@ -51,6 +58,13 @@ class VersionPrimaryList extends Component {
   }
 }
 
-VersionPrimaryList.propTypes = {};
+VersionList.propTypes = {
+  tests: PropTypes.array.isRequired,
+  commonState: PropTypes.object.isRequired,
+  query: PropTypes.string,
+  fetchVersions: PropTypes.func.isRequired,
+  fetchValues: PropTypes.func.isRequired,
+  removeValues: PropTypes.func.isRequired
+};
 
-export default VersionPrimaryList;
+export default VersionList;

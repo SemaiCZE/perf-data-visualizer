@@ -13,9 +13,9 @@ import {
 } from './utils/stateModifiers';
 import { getLoadedValues, getLoadedValuesData } from './utils/stateSelectors';
 import ResourceRenderer from './utils/ResourceRenderer';
-import SearchableTestList from './components/TestList/SearchableTestList';
-import LoadingTestList from './components/TestList/LoadingTestList';
-import FailedTestList from './components/TestList/FailedTestList';
+import SearchableList from './components/SidebarList/SearchableList';
+import LoadingList from './components/SidebarList/LoadingList';
+import FailedList from './components/SidebarList/FailedList';
 import ErrorAlert from './components/Alert/Alert';
 import TestInfo from './components/TestInfo/TestInfo';
 import LoadedValuesList from './components/LoadedValuesList/LoadedValuesList';
@@ -67,11 +67,11 @@ class App extends Component {
           <Col xs={4} lg={3} className="App-content-col Tests-col">
             <ResourceRenderer
               resource={this.state.tests}
-              loading={LoadingTestList}
-              failed={FailedTestList}
+              loading={LoadingList}
+              failed={FailedList}
             >
               {tests => (
-                <SearchableTestList
+                <SearchableList
                   tests={tests}
                   commonState={this.state}
                   fetchVersions={this.fetchTestVersions}

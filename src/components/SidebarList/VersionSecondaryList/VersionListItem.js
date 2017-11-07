@@ -7,10 +7,17 @@ import {
   isTestDataLoading,
   hasTestDataFailed,
   isTestDataEmpty
-} from '../../utils/stateSelectors';
-import { VersionIcon } from '../../icons';
+} from '../../../utils/stateSelectors';
+import { VersionIcon } from '../../../icons';
+import '../SecondaryList.css';
 
-const TestSecondaryListItem = ({ versionId, test }) => (
+const VersionListItem = ({
+  testId,
+  version,
+  commonState,
+  fetchValues,
+  removeValues
+}) => (
   <div>
     <Row className="Version-container-row">
       <Col xs={1}>
@@ -20,18 +27,24 @@ const TestSecondaryListItem = ({ versionId, test }) => (
         <Row>
           <OverlayTrigger
             placement="right"
-            overlay={<Tooltip id="tooltip">{test.id}</Tooltip>}
+            overlay={<Tooltip id="tooltip">{version.id}</Tooltip>}
           >
             <Col className="Version-title">
-              <span>{test.name}</span>
+              <span>
+                {version.id.indexOf('-') > 0
+                  ? version.id.substring(version.id.indexOf('-') + 1)
+                  : version.id}
+              </span>
             </Col>
           </OverlayTrigger>
         </Row>
         <Row>
           <Col xs={8} className="Version-timestamp">
-            {test.id}
+            {version.timestamp === 0
+              ? '–'
+              : new Date(version.timestamp * 1000).toLocaleString()}
           </Col>
-          {/*<Col xs={4}>
+          <Col xs={4}>
             {isTestDataReady(commonState, testId, version.id) && (
               <Button
                 bsSize="xsmall"
@@ -72,13 +85,19 @@ const TestSecondaryListItem = ({ versionId, test }) => (
                 Load
               </Button>
             )}
-          </Col>*/}
+          </Col>
         </Row>
       </Col>
     </Row>
   </div>
 );
 
-TestSecondaryListItem.propTypes = {};
+VersionListItem.propTypes = {
+  testId: PropTypes.string.isRequired,
+  version: PropTypes.object.isRequired,
+  commonState: PropTypes.object,
+  fetchValues: PropTypes.func,
+  removeValues: PropTypes.func
+};
 
-export default TestSecondaryListItem;
+export default VersionListItem;

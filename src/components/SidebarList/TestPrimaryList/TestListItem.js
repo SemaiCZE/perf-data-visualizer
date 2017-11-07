@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
-import ResourceRenderer from '../../utils/ResourceRenderer';
-import { PlusIcon, MinusIcon } from '../../icons';
-import VersionList from '../VersionList/VersionList';
-import FailedVersionList from '../VersionList/FailedVersionList';
-import LoadingVersionList from '../VersionList/LoadingVersionList';
+import ResourceRenderer from '../../../utils/ResourceRenderer';
+import { PlusIcon, MinusIcon } from '../../../icons';
+import VersionList from '../VersionSecondaryList/VersionList';
+import FailedVersionList from '../VersionSecondaryList/FailedVersionList';
+import LoadingVersionList from '../VersionSecondaryList/LoadingVersionList';
 
-import './TestList.css';
+import '../List.css';
 
 class TestListItem extends Component {
   constructor(props) {
@@ -36,33 +36,33 @@ class TestListItem extends Component {
       fetchValues,
       removeValues
     } = this.props;
-    var rowClass = 'Test-container-row';
+    var rowClass = 'Primary-container-row';
     if (commonState.activeTestId === test.id) {
-      rowClass += ' Test-active';
+      rowClass += ' Primary-active';
     }
 
     return (
-      <div className="Test-container">
+      <div className="Primary-container">
         <Row className={rowClass} onClick={setActive}>
-          <Col xs={1} className="Test-icon-col">
+          <Col xs={1} className="Primary-icon-col">
             {this.state.folded ? (
               <PlusIcon
                 size="2x"
                 onClick={e => this.onUnfold(e)}
-                className="Test-icon"
+                className="Primary-icon"
               />
             ) : (
               <MinusIcon
                 size="2x"
                 onClick={e => this.onFold(e)}
-                className="Test-icon"
+                className="Primary-icon"
               />
             )}
           </Col>
-          <Col xs={11} className="Test-texts-col">
-            <span className="Test-title">{test.name}</span>
+          <Col xs={11} className="Primary-texts-col">
+            <span className="Primary-title">{test.name}</span>
             <br />
-            <span className="Test-id">{test.id}</span>
+            <span className="Primary-id">{test.id}</span>
           </Col>
         </Row>
         {!this.state.folded && (

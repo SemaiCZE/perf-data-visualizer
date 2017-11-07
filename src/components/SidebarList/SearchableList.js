@@ -8,12 +8,12 @@ import {
   InputGroup
 } from 'react-bootstrap';
 
-import './TestList.css';
-import TestList from './TestList';
-import VersionPrimaryList from '../VersionPrimaryList/VersionPrimaryList';
+import './List.css';
+import TestList from './TestPrimaryList/TestList';
+import VersionList from './VersionPrimaryList/VersionList';
 import { SearchIcon } from '../../icons';
 
-class SearchableTestList extends Component {
+class SearchableList extends Component {
   state = { versionsFirst: false };
 
   componentWillMount() {
@@ -89,10 +89,10 @@ class SearchableTestList extends Component {
         </ButtonGroup>
 
         <form style={{ padding: '10px' }}>
-          <FormGroup className="Test-search-group">
+          <FormGroup className="Primary-search-group">
             <InputGroup>
               <FormControl
-                className="Test-search-inner"
+                className="Primary-search-inner"
                 placeholder="Search"
                 onChange={e => {
                   this.query = e.target.value;
@@ -102,7 +102,7 @@ class SearchableTestList extends Component {
               />
               <InputGroup.Button>
                 <Button
-                  className="Test-search-inner"
+                  className="Primary-search-inner"
                   type="submit"
                   onClick={e => {
                     e.preventDefault();
@@ -117,7 +117,7 @@ class SearchableTestList extends Component {
           </FormGroup>
         </form>
 
-        {!this.state.versionsFirst && (
+        <div style={{ display: !this.state.versionsFirst ? 'block' : 'none' }}>
           <TestList
             tests={this.state.visibleTests}
             commonState={commonState}
@@ -126,20 +126,24 @@ class SearchableTestList extends Component {
             removeValues={removeValues}
             setActiveTest={setActiveTest}
           />
-        )}
-        {this.state.versionsFirst && (
-          <VersionPrimaryList
+        </div>
+
+        <div style={{ display: this.state.versionsFirst ? 'block' : 'none' }}>
+          <VersionList
             tests={tests}
             commonState={commonState}
+            query={this.query}
             fetchVersions={fetchVersions}
+            fetchValues={fetchValues}
+            removeValues={removeValues}
           />
-        )}
+        </div>
       </div>
     );
   }
 }
 
-SearchableTestList.propTypes = {
+SearchableList.propTypes = {
   tests: PropTypes.array,
   commonState: PropTypes.object,
   fetchVersions: PropTypes.func,
@@ -148,4 +152,4 @@ SearchableTestList.propTypes = {
   setActiveTest: PropTypes.func
 };
 
-export default SearchableTestList;
+export default SearchableList;

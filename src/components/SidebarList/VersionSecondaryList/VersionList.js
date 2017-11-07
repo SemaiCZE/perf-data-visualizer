@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import VersionListItem from './VersionListItem';
-import './VersionList.css';
+import '../SecondaryList.css';
 
 const VersionList = ({
   testId,
@@ -10,9 +10,9 @@ const VersionList = ({
   commonState,
   fetchValues,
   removeValues
-}) =>
+}) => (
   <div className="Versions-container">
-    {versions.map((version, i) =>
+    {versions.map((version, i) => (
       <VersionListItem
         key={i}
         testId={testId}
@@ -21,8 +21,9 @@ const VersionList = ({
         fetchValues={() => fetchValues(version.id)}
         removeValues={() => removeValues(version.id)}
       />
-    )}
-  </div>;
+    ))}
+  </div>
+);
 
 VersionList.propTypes = {
   testId: PropTypes.string,

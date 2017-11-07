@@ -1,11 +1,11 @@
 import React from 'react';
-import { LoadingIcon } from '../../icons';
+import { WarningIcon } from '../../../icons';
 
-import './VersionList.css';
+import '../SecondaryList.css';
 
 const FailedVersionList = (
   <div className="Versions-container Version-loading-failed">
-    <LoadingIcon /> <span>Loading ...</span>
+    <WarningIcon /> <span>Loading failed</span>
   </div>
 );
 

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
-import ResourceRenderer from '../../utils/ResourceRenderer';
-import { PlusIcon, MinusIcon } from '../../icons';
+import { PlusIcon, MinusIcon } from '../../../icons';
 import TestSecondaryList from '../TestSecondaryList/TestSecondaryList';
 
-import '../TestList/TestList.css';
+import '../List.css';
 
 class VersionPrimaryListItem extends Component {
   constructor(props) {
@@ -24,35 +23,41 @@ class VersionPrimaryListItem extends Component {
   }
 
   render() {
-    const { version, tests } = this.props;
-    var rowClass = 'Test-container-row';
+    const {
+      version,
+      tests,
+      commonState,
+      fetchValues,
+      removeValues
+    } = this.props;
+    var rowClass = 'Primary-container-row';
 
     return (
-      <div className="Test-container">
+      <div className="Primary-container">
         <Row className={rowClass}>
-          <Col xs={1} className="Test-icon-col">
+          <Col xs={1} className="Primary-icon-col">
             {this.state.folded ? (
               <PlusIcon
                 size="2x"
                 onClick={e => this.onUnfold(e)}
-                className="Test-icon"
+                className="Primary-icon"
               />
             ) : (
               <MinusIcon
                 size="2x"
                 onClick={e => this.onFold(e)}
-                className="Test-icon"
+                className="Primary-icon"
               />
             )}
           </Col>
-          <Col xs={11} className="Test-texts-col">
-            <span className="Test-title">
+          <Col xs={11} className="Primary-texts-col">
+            <span className="Primary-title">
               {version.id.indexOf('-') > 0
                 ? version.id.substring(version.id.indexOf('-') + 1)
                 : version.id}
             </span>
             <br />
-            <span className="Test-id">
+            <span className="Primary-id">
               {version.timestamp === 0
                 ? '–'
                 : new Date(version.timestamp * 1000).toLocaleString()}
@@ -60,13 +65,25 @@ class VersionPrimaryListItem extends Component {
           </Col>
         </Row>
         {!this.state.folded && (
-          <TestSecondaryList versionId={version.id} tests={tests} />
+          <TestSecondaryList
+            versionId={version.id}
+            tests={tests}
+            commonState={commonState}
+            fetchValues={fetchValues}
+            removeValues={removeValues}
+          />
         )}
       </div>
     );
   }
 }
 
-VersionPrimaryListItem.propTypes = {};
+VersionPrimaryListItem.propTypes = {
+  version: PropTypes.object.isRequired,
+  tests: PropTypes.array.isRequired,
+  commonState: PropTypes.object.isRequired,
+  fetchValues: PropTypes.func.isRequired,
+  removeValues: PropTypes.func.isRequired
+};
 
 export default VersionPrimaryListItem;

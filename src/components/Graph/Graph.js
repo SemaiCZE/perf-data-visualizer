@@ -12,32 +12,35 @@ class Graph extends Component {
   componentWillReceiveProps(newProps) {
     const { type, data, maxBins } = newProps;
 
-    const plotData = data
-      .sort((a, b) => a.timestamp - b.timestamp)
-      .map((item, index) => {
-        let data = {};
-        data.text = 'data units: ' + item.units;
-        if (type === 'scatter') {
-          data.x0 = 1;
-          data.dx = 1;
-          data.y = item.values;
-        } else if (type === 'histogram') {
-          data.x = item.values;
-          data.nbinsx = maxBins;
-        } else if (type === 'box') {
-          data.x0 =
-            item.timestamp !== 0
-              ? new Date(item.timestamp * 1000).toLocaleString()
-              : '–';
-          data.y = item.values;
-        }
+    let plotData = [{ x: [], y: [] }];
+    if (data.length > 0) {
+      plotData = data
+        .sort((a, b) => a.timestamp - b.timestamp)
+        .map((item, index) => {
+          let data = {};
+          data.text = 'data units: ' + item.units;
+          if (type === 'scatter') {
+            data.x0 = 1;
+            data.dx = 1;
+            data.y = item.values;
+          } else if (type === 'histogram') {
+            data.x = item.values;
+            data.nbinsx = maxBins;
+          } else if (type === 'box') {
+            data.x0 =
+              item.timestamp !== 0
+                ? new Date(item.timestamp * 1000).toLocaleString()
+                : '–';
+            data.y = item.values;
+          }
 
-        return {
-          type: type,
-          name: item.name,
-          ...data
-        };
-      });
+          return {
+            type: type,
+            name: item.name,
+            ...data
+          };
+        });
+    }
 
     Plotly.newPlot(
       'plot',

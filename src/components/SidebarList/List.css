@@ -1,8 +1,8 @@
-.Test-container {
+.Primary-container {
   min-height: 80px;
 }
 
-.Test-container-row {
+.Primary-container-row {
   padding: 15px;
   width: 100%;
   margin: 0;
@@ -10,24 +10,24 @@
   display: flex;
 }
 
-.Test-container-row:hover {
+.Primary-container-row:hover {
   background-color: #f2f2f2;
 }
 
-.Test-active {
+.Primary-active {
   background-color: #f2f2f2;
 }
 
-.Test-icon-col {
+.Primary-icon-col {
   margin-top: 12px;
 }
 
-.Test-icon {
+.Primary-icon {
   cursor: pointer;
   color: #0f8bff;
 }
 
-.Test-texts-col {
+.Primary-texts-col {
   margin-top: 5px;
   padding-right: 0;
   width: 100%;
@@ -35,30 +35,30 @@
   overflow: hidden;
 }
 
-.Test-title {
+.Primary-title {
   font-size: medium;
 }
 
-.Test-id {
+.Primary-id {
   font-style: italic;
   font-size: small;
   color: grey;
 }
 
-.Test-loading-failed {
+.Primary-loading-failed {
   text-align: center;
   font-size: larger;
   line-height: 100px;
 }
 
-.Test-search-group {
+.Primary-search-group {
   margin-bottom: 0;
   margin-top: 5px;
 }
 
-.Test-search-inner,
-.Test-search-inner:focus,
-.Test-search-inner:hover {
+.Primary-search-inner,
+.Primary-search-inner:focus,
+.Primary-search-inner:hover {
   background-color: #f2f2f2;
   border: 1px solid #f2f2f2;
   box-shadow: none;

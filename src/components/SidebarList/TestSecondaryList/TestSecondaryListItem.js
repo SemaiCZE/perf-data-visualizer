@@ -7,15 +7,15 @@ import {
   isTestDataLoading,
   hasTestDataFailed,
   isTestDataEmpty
-} from '../../utils/stateSelectors';
-import { VersionIcon } from '../../icons';
+} from '../../../utils/stateSelectors';
+import { VersionIcon } from '../../../icons';
 
-const VersionListItem = ({
-  testId,
-  version,
+const TestSecondaryListItem = ({
+  versionId,
+  test,
   commonState,
-  fetchValues,
-  removeValues
+  removeValues,
+  fetchValues
 }) => (
   <div>
     <Row className="Version-container-row">
@@ -26,25 +26,19 @@ const VersionListItem = ({
         <Row>
           <OverlayTrigger
             placement="right"
-            overlay={<Tooltip id="tooltip">{version.id}</Tooltip>}
+            overlay={<Tooltip id="tooltip">{test.id}</Tooltip>}
           >
             <Col className="Version-title">
-              <span>
-                {version.id.indexOf('-') > 0
-                  ? version.id.substring(version.id.indexOf('-') + 1)
-                  : version.id}
-              </span>
+              <span>{test.name}</span>
             </Col>
           </OverlayTrigger>
         </Row>
         <Row>
           <Col xs={8} className="Version-timestamp">
-            {version.timestamp === 0
-              ? '–'
-              : new Date(version.timestamp * 1000).toLocaleString()}
+            {test.id}
           </Col>
           <Col xs={4}>
-            {isTestDataReady(commonState, testId, version.id) && (
+            {isTestDataReady(commonState, test.id, versionId) && (
               <Button
                 bsSize="xsmall"
                 bsStyle="danger"
@@ -54,7 +48,7 @@ const VersionListItem = ({
                 Remove
               </Button>
             )}
-            {isTestDataLoading(commonState, testId, version.id) && (
+            {isTestDataLoading(commonState, test.id, versionId) && (
               <Button
                 bsSize="xsmall"
                 bsStyle="primary"
@@ -64,7 +58,7 @@ const VersionListItem = ({
                 Loading ...
               </Button>
             )}
-            {hasTestDataFailed(commonState, testId, version.id) && (
+            {hasTestDataFailed(commonState, test.id, versionId) && (
               <Button
                 bsSize="xsmall"
                 bsStyle="warning"
@@ -74,7 +68,7 @@ const VersionListItem = ({
                 Loading failed, try again
               </Button>
             )}
-            {isTestDataEmpty(commonState, testId, version.id) && (
+            {isTestDataEmpty(commonState, test.id, versionId) && (
               <Button
                 bsSize="xsmall"
                 bsStyle="primary"
@@ -91,12 +85,12 @@ const VersionListItem = ({
   </div>
 );
 
-VersionListItem.propTypes = {
-  testId: PropTypes.string.isRequired,
-  version: PropTypes.object.isRequired,
-  commonState: PropTypes.object,
-  fetchValues: PropTypes.func,
-  removeValues: PropTypes.func
+TestSecondaryListItem.propTypes = {
+  versionId: PropTypes.string.isRequired,
+  test: PropTypes.object.isRequired,
+  commonState: PropTypes.object.isRequired,
+  fetchValues: PropTypes.func.isRequired,
+  removeValues: PropTypes.func.isRequired
 };
 
-export default VersionListItem;
+export default TestSecondaryListItem;

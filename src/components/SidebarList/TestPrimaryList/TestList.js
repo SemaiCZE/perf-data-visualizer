@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './TestList.css';
+import '../List.css';
 import TestListItem from './TestListItem';
 
 const TestList = ({
@@ -11,9 +11,9 @@ const TestList = ({
   fetchValues,
   removeValues,
   setActiveTest
-}) =>
+}) => (
   <div>
-    {tests.map((test, i) =>
+    {tests.map((test, i) => (
       <TestListItem
         key={i}
         test={test}
@@ -23,8 +23,9 @@ const TestList = ({
         removeValues={versionId => removeValues(test.id, versionId)}
         setActive={() => setActiveTest(test.id)}
       />
-    )}
-  </div>;
+    ))}
+  </div>
+);
 
 TestList.propTypes = {
   tests: PropTypes.array,
