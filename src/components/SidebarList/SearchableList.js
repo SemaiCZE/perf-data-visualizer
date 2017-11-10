@@ -117,7 +117,7 @@ class SearchableList extends Component {
           </FormGroup>
         </form>
 
-        <div style={{ display: !this.state.versionsFirst ? 'block' : 'none' }}>
+        {!this.state.versionsFirst && (
           <TestList
             tests={this.state.visibleTests}
             commonState={commonState}
@@ -126,9 +126,9 @@ class SearchableList extends Component {
             removeValues={removeValues}
             setActiveTest={setActiveTest}
           />
-        </div>
+        )}
 
-        <div style={{ display: this.state.versionsFirst ? 'block' : 'none' }}>
+        {this.state.versionsFirst && (
           <VersionList
             tests={tests}
             commonState={commonState}
@@ -137,7 +137,7 @@ class SearchableList extends Component {
             fetchValues={fetchValues}
             removeValues={removeValues}
           />
-        </div>
+        )}
       </div>
     );
   }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ResourceRenderer from '../../../utils/ResourceRenderer';
 import VersionListItem from './VersionListItem';
+import LoadingList from '../LoadingList';
+import FailedList from '../FailedList';
 
 class VersionList extends Component {
   componentDidMount() {
@@ -18,7 +20,11 @@ class VersionList extends Component {
     );
 
     return (
-      <ResourceRenderer resource={allTestsVersions}>
+      <ResourceRenderer
+        resource={allTestsVersions}
+        loading={LoadingList}
+        failed={FailedList}
+      >
         {testVersions => {
           let versionTestTree = {};
           for (let test of tests) {
