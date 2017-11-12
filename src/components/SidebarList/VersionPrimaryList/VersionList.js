@@ -25,10 +25,18 @@ class VersionList extends Component {
         loading={LoadingList}
         failed={FailedList}
       >
-        {testVersions => {
+        {(...testVersions) => {
           let versionTestTree = {};
-          for (let test of tests) {
-            for (let testVer of testVersions) {
+          let uniqueVersions = [];
+          for (let i = 0; i < tests.length; i++) {
+            let test = tests[i];
+            for (let testVer of testVersions[i]) {
+              if (
+                uniqueVersions.find(version => version.id === testVer.id) ===
+                undefined
+              ) {
+                uniqueVersions.push(testVer);
+              }
               // key not found, just add the empty array
               if (Object.keys(versionTestTree).indexOf(testVer.id) < 0) {
                 versionTestTree[testVer.id] = [];
@@ -36,9 +44,10 @@ class VersionList extends Component {
               versionTestTree[testVer.id].push(test);
             }
           }
+
           return (
             <div>
-              {testVersions
+              {uniqueVersions
                 .filter(
                   version =>
                     version.id

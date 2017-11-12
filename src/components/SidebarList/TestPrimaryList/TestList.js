@@ -13,17 +13,19 @@ const TestList = ({
   setActiveTest
 }) => (
   <div>
-    {tests.map((test, i) => (
-      <TestListItem
-        key={i}
-        test={test}
-        commonState={commonState}
-        fetchVersions={() => fetchVersions(test.id)}
-        fetchValues={versionId => fetchValues(test.id, versionId)}
-        removeValues={versionId => removeValues(test.id, versionId)}
-        setActive={() => setActiveTest(test.id)}
-      />
-    ))}
+    {tests
+      .sort((a, b) => a.id.localeCompare(b.id))
+      .map((test, i) => (
+        <TestListItem
+          key={i}
+          test={test}
+          commonState={commonState}
+          fetchVersions={() => fetchVersions(test.id)}
+          fetchValues={versionId => fetchValues(test.id, versionId)}
+          removeValues={versionId => removeValues(test.id, versionId)}
+          setActive={() => setActiveTest(test.id)}
+        />
+      ))}
   </div>
 );
 

@@ -34,6 +34,8 @@
   font-size: small;
   color: grey;
   padding: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Version-load-button {

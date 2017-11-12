@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import ResourceRenderer from '../../../utils/ResourceRenderer';
 import { PlusIcon, MinusIcon } from '../../../icons';
 import VersionList from '../VersionSecondaryList/VersionList';
@@ -60,9 +60,17 @@ class TestListItem extends Component {
             )}
           </Col>
           <Col xs={11} className="Primary-texts-col">
-            <span className="Primary-title">{test.name}</span>
-            <br />
-            <span className="Primary-id">{test.id}</span>
+            <OverlayTrigger
+              placement="right"
+              overlay={<Tooltip id="tooltip">{test.id}</Tooltip>}
+            >
+              <Col className="Primary-title">
+                <span>{test.name}</span>
+              </Col>
+            </OverlayTrigger>
+            <span className="Primary-id">
+              {test.id.substring(test.id.indexOf('@'))}
+            </span>
           </Col>
         </Row>
         {!this.state.folded && (

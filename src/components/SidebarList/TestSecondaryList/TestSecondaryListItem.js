@@ -35,7 +35,7 @@ const TestSecondaryListItem = ({
         </Row>
         <Row>
           <Col xs={8} className="Version-timestamp">
-            {test.id}
+            {test.id.substring(test.id.indexOf('@'))}
           </Col>
           <Col xs={4}>
             {isTestDataReady(commonState, test.id, versionId) && (
