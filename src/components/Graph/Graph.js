@@ -19,6 +19,7 @@ class Graph extends Component {
         .map((item, index) => {
           let data = {};
           data.text = 'data units: ' + item.units;
+          data.hoverinfo = 'x+y+z';
           if (type === 'scatter') {
             data.x0 = 1;
             data.dx = 1;
@@ -29,8 +30,10 @@ class Graph extends Component {
           } else if (type === 'box') {
             data.x0 =
               item.timestamp !== 0
-                ? new Date(item.timestamp * 1000).toLocaleString()
-                : '–';
+                ? `${index}: ${new Date(
+                    item.timestamp * 1000
+                  ).toLocaleString()}`
+                : `${index}: –`;
             data.y = item.values;
           }
 
