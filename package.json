@@ -5,9 +5,9 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "prop-types": "^15.5.10",
-    "react": "^15.6.1",
+    "react": "^16.2.0",
     "react-bootstrap": "^0.31.2",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.2.0",
     "react-fontawesome": "^1.6.1",
     "react-scripts": "1.0.10"
   },
