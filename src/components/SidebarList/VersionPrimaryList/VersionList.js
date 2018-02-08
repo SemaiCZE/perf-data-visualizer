@@ -49,12 +49,12 @@ class VersionList extends Component {
             <div>
               {uniqueVersions
                 .filter(
-                  version =>
-                    version.id
-                      .toLocaleLowerCase()
-                      .search(query.toLocaleLowerCase()) !== -1
+                version =>
+                  version.id
+                    .toLocaleLowerCase()
+                    .search(query.toLocaleLowerCase()) !== -1
                 )
-                .sort((a, b) => b.timestamp - a.timestamp)
+                .sort((a, b) => { if (a.timestamp !== b.timestamp) { return b.timestamp - a.timestamp; } else { return a.id.localeCompare(b.id); } })
                 .map((version, i) => (
                   <VersionListItem
                     key={i}

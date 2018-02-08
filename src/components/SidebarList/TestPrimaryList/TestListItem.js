@@ -52,12 +52,12 @@ class TestListItem extends Component {
                 className="Primary-icon"
               />
             ) : (
-              <MinusIcon
-                size="2x"
-                onClick={e => this.onFold(e)}
-                className="Primary-icon"
-              />
-            )}
+                <MinusIcon
+                  size="2x"
+                  onClick={e => this.onFold(e)}
+                  className="Primary-icon"
+                />
+              )}
           </Col>
           <Col xs={11} className="Primary-texts-col">
             <OverlayTrigger
@@ -82,7 +82,7 @@ class TestListItem extends Component {
             {versions => (
               <VersionList
                 testId={test.id}
-                versions={versions.sort((a, b) => b.timestamp - a.timestamp)}
+                versions={versions.sort((a, b) => { if (a.timestamp !== b.timestamp) { return b.timestamp - a.timestamp; } else { return a.id.localeCompare(b.id); } })}
                 commonState={commonState}
                 fetchValues={fetchValues}
                 removeValues={removeValues}
