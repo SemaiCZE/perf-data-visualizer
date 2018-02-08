@@ -49,3 +49,25 @@
   padding-left: 0;
   padding-right: 0;
 }
+
+.Col-no-padding {
+  padding: 0;
+}
+
+.Delete-all-btn {
+  background-color: white;
+  height: 50px;
+  width: 50px;
+  margin-top: 6px;
+  margin-right: 6px;
+  border-radius: 6px;
+  color: red;
+  font-size: 28px;
+  line-height: 28px;
+  float: right;
+}
+
+.Delete-all-btn:hover {
+  background-color: grey;
+  color: red;
+}
