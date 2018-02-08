@@ -64,7 +64,8 @@
   color: red;
   font-size: 28px;
   line-height: 28px;
-  float: right;
+  position: fixed;
+  right: 15px;
 }
 
 .Delete-all-btn:hover {
