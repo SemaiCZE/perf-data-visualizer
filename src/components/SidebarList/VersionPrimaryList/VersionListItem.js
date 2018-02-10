@@ -43,17 +43,17 @@ class VersionPrimaryListItem extends Component {
                 className="Primary-icon"
               />
             ) : (
-                <MinusIcon
-                  size="2x"
-                  onClick={e => this.onFold(e)}
-                  className="Primary-icon"
-                />
-              )}
+              <MinusIcon
+                size="2x"
+                onClick={e => this.onFold(e)}
+                className="Primary-icon"
+              />
+            )}
           </Col>
           <Col xs={11} className="Primary-texts-col">
             <span className="Primary-title">
-              {version.id.indexOf('-') > 0
-                ? version.id.substring(version.id.lastIndexOf('-') + 1)
+              {version.id.indexOf('-', 12) > 0 // v-1468950957- prefix
+                ? version.id.substring(version.id.indexOf('-', 12) + 1)
                 : version.id}
             </span>
             <br />

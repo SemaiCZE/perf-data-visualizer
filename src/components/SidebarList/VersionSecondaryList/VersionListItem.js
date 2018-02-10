@@ -18,79 +18,79 @@ const VersionListItem = ({
   fetchValues,
   removeValues
 }) => (
-    <div>
-      <Row className="Version-container-row">
-        <Col xs={1}>
-          <VersionIcon className="Version-icon" />
-        </Col>
-        <Col xs={11} className="Version-list-col">
-          <Row>
-            <OverlayTrigger
-              placement="right"
-              overlay={<Tooltip id="tooltip">{version.id}</Tooltip>}
-            >
-              <Col className="Version-title">
-                <span>
-                  {version.id.indexOf('-') > 0
-                    ? version.id.substring(version.id.lastIndexOf('-') + 1)
-                    : version.id}
-                </span>
-              </Col>
-            </OverlayTrigger>
-          </Row>
-          <Row>
-            <Col xs={8} className="Version-timestamp">
-              {version.timestamp === 0
-                ? '–'
-                : new Date(version.timestamp * 1000).toLocaleString()}
+  <div>
+    <Row className="Version-container-row">
+      <Col xs={1}>
+        <VersionIcon className="Version-icon" />
+      </Col>
+      <Col xs={11} className="Version-list-col">
+        <Row>
+          <OverlayTrigger
+            placement="right"
+            overlay={<Tooltip id="tooltip">{version.id}</Tooltip>}
+          >
+            <Col className="Version-title">
+              <span>
+                {version.id.indexOf('-', 12) > 0 // v-1468950957- prefix
+                  ? version.id.substring(version.id.indexOf('-', 12) + 1)
+                  : version.id}
+              </span>
             </Col>
-            <Col xs={4}>
-              {isTestDataReady(commonState, testId, version.id) && (
-                <Button
-                  bsSize="xsmall"
-                  bsStyle="danger"
-                  className="Version-load-button"
-                  onClick={removeValues}
-                >
-                  Remove
+          </OverlayTrigger>
+        </Row>
+        <Row>
+          <Col xs={8} className="Version-timestamp">
+            {version.timestamp === 0
+              ? '–'
+              : new Date(version.timestamp * 1000).toLocaleString()}
+          </Col>
+          <Col xs={4}>
+            {isTestDataReady(commonState, testId, version.id) && (
+              <Button
+                bsSize="xsmall"
+                bsStyle="danger"
+                className="Version-load-button"
+                onClick={removeValues}
+              >
+                Remove
               </Button>
-              )}
-              {isTestDataLoading(commonState, testId, version.id) && (
-                <Button
-                  bsSize="xsmall"
-                  bsStyle="primary"
-                  className="Version-load-button"
-                  disabled
-                >
-                  Loading ...
+            )}
+            {isTestDataLoading(commonState, testId, version.id) && (
+              <Button
+                bsSize="xsmall"
+                bsStyle="primary"
+                className="Version-load-button"
+                disabled
+              >
+                Loading ...
               </Button>
-              )}
-              {hasTestDataFailed(commonState, testId, version.id) && (
-                <Button
-                  bsSize="xsmall"
-                  bsStyle="warning"
-                  className="Version-load-button"
-                  onClick={fetchValues}
-                >
-                  Loading failed, try again
+            )}
+            {hasTestDataFailed(commonState, testId, version.id) && (
+              <Button
+                bsSize="xsmall"
+                bsStyle="warning"
+                className="Version-load-button"
+                onClick={fetchValues}
+              >
+                Loading failed, try again
               </Button>
-              )}
-              {isTestDataEmpty(commonState, testId, version.id) && (
-                <Button
-                  bsSize="xsmall"
-                  bsStyle="primary"
-                  className="Version-load-button"
-                  onClick={fetchValues}
-                >
-                  Load
+            )}
+            {isTestDataEmpty(commonState, testId, version.id) && (
+              <Button
+                bsSize="xsmall"
+                bsStyle="primary"
+                className="Version-load-button"
+                onClick={fetchValues}
+              >
+                Load
               </Button>
-              )}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </div>
-  );
+            )}
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </div>
+);
 
 VersionListItem.propTypes = {
   testId: PropTypes.string.isRequired,
