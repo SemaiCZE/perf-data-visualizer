@@ -19,7 +19,7 @@ class Graph extends Component {
         .map((item, index) => {
           let data = {};
           data.text = 'data units: ' + item.units;
-          data.hoverinfo = 'x+y+z';
+          data.hoverinfo = 'x+y+z+text';
           if (type === 'scatter') {
             data.x0 = 1;
             data.dx = 1;

@@ -10,11 +10,11 @@ import {
 import Graph from '../Graph/Graph';
 
 const getTimestamp = versionId => {
-  const dashIndex = versionId.indexOf('-');
+  const dashIndex = versionId.indexOf('-', 2); // ignore 'v-' prefix
   if (dashIndex < 0) {
     return 0;
   }
-  return Number(versionId.substring(0, dashIndex));
+  return Number(versionId.substring(2, dashIndex));
 };
 
 class GraphWrapper extends Component {
@@ -71,7 +71,8 @@ class GraphWrapper extends Component {
             &nbsp;
             <Checkbox
               onChange={e =>
-                this.setState({ splitRuns: !this.state.splitRuns })}
+                this.setState({ splitRuns: !this.state.splitRuns })
+              }
             />
           </FormGroup>
           &nbsp;&nbsp;&nbsp;&nbsp;
