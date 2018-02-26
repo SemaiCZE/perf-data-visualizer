@@ -18,7 +18,12 @@ const getTimestamp = versionId => {
 };
 
 class GraphWrapper extends Component {
-  state = { splitRuns: false, graphType: 'scatter', maxBins: 50 };
+  state = {
+    splitRuns: false,
+    graphType: 'scatter',
+    maxBins: 50,
+    hideLegend: false
+  };
 
   prepareNormalData(data) {
     return data.map(item => ({
@@ -67,6 +72,16 @@ class GraphWrapper extends Component {
           )}
           &nbsp;&nbsp;&nbsp;&nbsp;
           <FormGroup>
+            <ControlLabel>Hide legend:</ControlLabel>
+            &nbsp;
+            <Checkbox
+              onChange={e =>
+                this.setState({ hideLegend: !this.state.hideLegend })
+              }
+            />
+          </FormGroup>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <FormGroup>
             <ControlLabel>Split runs:</ControlLabel>
             &nbsp;
             <Checkbox
@@ -97,6 +112,7 @@ class GraphWrapper extends Component {
           }
           type={this.state.graphType}
           maxBins={this.state.maxBins}
+          hideLegend={this.state.hideLegend}
         />
       </div>
     );

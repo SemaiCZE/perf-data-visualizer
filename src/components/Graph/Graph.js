@@ -10,7 +10,7 @@ class Graph extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const { type, data, maxBins } = newProps;
+    const { type, data, maxBins, hideLegend } = newProps;
 
     let plotData = [{ x: [], y: [] }];
     if (data.length > 0) {
@@ -57,7 +57,7 @@ class Graph extends Component {
         xaxis: {
           gridcolor: 'transparent'
         },
-        showlegend: true,
+        showlegend: !hideLegend,
         legend: {
           x: 0,
           y: 100
