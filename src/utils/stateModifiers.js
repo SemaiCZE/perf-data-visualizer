@@ -9,9 +9,11 @@ export const stateFetchTests = setState => () => {
   setState({
     tests: createStateEntry(statusTypes.LOADING)
   });
-  const onSuccess = data =>
+  const onSuccess = data => {
     setState({ tests: createStateEntry(statusTypes.FULFILED, data) });
-  const onError = error =>
+    return Promise.resolve(data);
+  };
+  const onError = error => {
     setState({
       tests: createStateEntry(statusTypes.FAILED),
       error: {
@@ -22,7 +24,9 @@ export const stateFetchTests = setState => () => {
         }
       }
     });
-  apiFetchTests()(onSuccess, onError);
+    return Promise.reject(error);
+  };
+  return apiFetchTests()(onSuccess, onError);
 };
 
 export const stateFetchTestVersions = setState => testId => {
@@ -31,13 +35,15 @@ export const stateFetchTestVersions = setState => testId => {
     newTestVersions[testId] = createStateEntry(statusTypes.LOADING);
     return { testVersions: newTestVersions };
   });
-  const onSuccess = data =>
+  const onSuccess = data => {
     setState((prevState, props) => {
       const newTestVersions = prevState.testVersions;
       newTestVersions[testId] = createStateEntry(statusTypes.FULFILED, data);
       return { testVersions: newTestVersions };
     });
-  const onError = error =>
+    return Promise.resolve(data);
+  };
+  const onError = error => {
     setState((prevState, props) => {
       const newTestVersions = prevState.testVersions;
       newTestVersions[testId] = createStateEntry(statusTypes.FAILED);
@@ -52,7 +58,9 @@ export const stateFetchTestVersions = setState => testId => {
         }
       };
     });
-  apiFetchTestVersions(testId)(onSuccess, onError);
+    return Promise.reject(error);
+  };
+  return apiFetchTestVersions(testId)(onSuccess, onError);
 };
 
 export const stateFetchTestVersionsIfNeeded = (
@@ -60,7 +68,9 @@ export const stateFetchTestVersionsIfNeeded = (
   setState
 ) => testId => {
   if (!isReady(getState().testVersions[testId])) {
-    stateFetchTestVersions(setState)(testId);
+    return stateFetchTestVersions(setState)(testId);
+  } else {
+    return Promise.resolve(getState().testVersions[testId].data);
   }
 };
 
@@ -73,7 +83,7 @@ export const stateFetchTestValues = setState => (testId, versionId) => {
     newTestValues[testId][versionId] = createStateEntry(statusTypes.LOADING);
     return { testValues: newTestValues };
   });
-  const onSuccess = data =>
+  const onSuccess = data => {
     setState((prevState, props) => {
       const newTestValues = prevState.testValues;
       newTestValues[testId][versionId] = createStateEntry(
@@ -82,7 +92,9 @@ export const stateFetchTestValues = setState => (testId, versionId) => {
       );
       return { testValues: newTestValues };
     });
-  const onError = error =>
+    return Promise.resolve(data);
+  };
+  const onError = error => {
     setState((prevState, props) => {
       const newTestValues = prevState.testValues;
       newTestValues[testId][versionId] = createStateEntry(statusTypes.FAILED);
@@ -97,7 +109,9 @@ export const stateFetchTestValues = setState => (testId, versionId) => {
         }
       };
     });
-  apiFetchTestValues(testId, versionId)(onSuccess, onError);
+    return Promise.reject(error);
+  };
+  return apiFetchTestValues(testId, versionId)(onSuccess, onError);
 };
 
 export const stateRemoveTestValues = setState => (testId, versionId) => {

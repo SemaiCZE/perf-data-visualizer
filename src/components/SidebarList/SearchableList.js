@@ -12,9 +12,10 @@ import './List.css';
 import TestList from './TestPrimaryList/TestList';
 import VersionList from './VersionPrimaryList/VersionList';
 import { SearchIcon } from '../../icons';
+import AdvancedLoad from '../AdvancedLoad/AdvancedLoad';
 
 class SearchableList extends Component {
-  state = { versionsFirst: false };
+  state = { versionsFirst: false, advancedLoadOpen: false };
 
   componentWillMount() {
     this.query = '';
@@ -36,6 +37,14 @@ class SearchableList extends Component {
     this.setState((prevState, props) => {
       return {
         versionsFirst: versionsFirst
+      };
+    });
+  }
+
+  advancedLoadChange(isOpen) {
+    this.setState((prevState, props) => {
+      return {
+        advancedLoadOpen: isOpen
       };
     });
   }
@@ -85,6 +94,12 @@ class SearchableList extends Component {
             onClick={() => this.testVersionChange(true)}
           >
             Versions
+          </Button>
+          <Button
+            className={groupButtonClass}
+            onClick={() => this.advancedLoadChange(true)}
+          >
+            Advanced Load
           </Button>
         </ButtonGroup>
 
@@ -138,6 +153,14 @@ class SearchableList extends Component {
             removeValues={removeValues}
           />
         )}
+        <AdvancedLoad
+          isOpen={this.state.advancedLoadOpen}
+          onClose={() => this.advancedLoadChange(false)}
+          tests={tests}
+          commonState={commonState}
+          fetchVersions={fetchVersions}
+          fetchValues={fetchValues}
+        />
       </div>
     );
   }
