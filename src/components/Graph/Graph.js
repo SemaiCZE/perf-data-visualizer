@@ -35,6 +35,9 @@ class Graph extends Component {
                   ).toLocaleString()}`
                 : `${index}: –`;
             data.y = item.values;
+            data.jitter = 0.3;
+            data.hoverinfo = 'x+y+z+text+name';
+            data.hoverlabel = { namelength: -1 };
           }
 
           return {
