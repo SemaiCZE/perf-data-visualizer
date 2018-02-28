@@ -12,7 +12,9 @@ global.Plotly = {
   }
 };
 
-global.requestAnimationFrame = callback => { setTimeout(callback, 0) };
+global.requestAnimationFrame = callback => {
+  setTimeout(callback, 0);
+};
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

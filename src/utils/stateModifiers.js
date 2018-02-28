@@ -20,11 +20,11 @@ export const stateFetchTests = setState => () => {
         message: error.message,
         refresh: () => {
           stateClearError(setState)();
-          stateFetchTests(setState)();
+          return stateFetchTests(setState)();
         }
       }
     });
-    return Promise.reject(error);
+    // return Promise.reject(error);
   };
   return apiFetchTests()(onSuccess, onError);
 };
@@ -53,12 +53,12 @@ export const stateFetchTestVersions = setState => testId => {
           message: error.message,
           refresh: () => {
             stateClearError(setState)();
-            stateFetchTestVersions(setState)(testId);
+            return stateFetchTestVersions(setState)(testId);
           }
         }
       };
     });
-    return Promise.reject(error);
+    // return Promise.reject(error);
   };
   return apiFetchTestVersions(testId)(onSuccess, onError);
 };
@@ -104,12 +104,12 @@ export const stateFetchTestValues = setState => (testId, versionId) => {
           message: error.message,
           refresh: () => {
             stateClearError(setState)();
-            stateFetchTestValues(setState)(testId, versionId);
+            return stateFetchTestValues(setState)(testId, versionId);
           }
         }
       };
     });
-    return Promise.reject(error);
+    // return Promise.reject(error);
   };
   return apiFetchTestValues(testId, versionId)(onSuccess, onError);
 };
