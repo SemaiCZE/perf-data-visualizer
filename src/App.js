@@ -9,9 +9,14 @@ import {
   stateFetchTestValues,
   stateRemoveTestValues,
   stateClearError,
-  stateSetActiveTest
+  stateSetActiveTest,
+  stateSetGraphMeta
 } from './utils/stateModifiers';
-import { getLoadedValues, getLoadedValuesData } from './utils/stateSelectors';
+import {
+  getLoadedValues,
+  getLoadedValuesData,
+  getGraphMeta
+} from './utils/stateSelectors';
 import ResourceRenderer from './utils/ResourceRenderer';
 import SearchableList from './components/SidebarList/SearchableList';
 import LoadingList from './components/SidebarList/LoadingList';
@@ -50,6 +55,7 @@ class App extends Component {
   );
   clearError = stateClearError((...props) => this.setState(...props));
   setActiveTest = stateSetActiveTest((...props) => this.setState(...props));
+  setGraphMeta = stateSetGraphMeta((...props) => this.setState(...props));
 
   // ***********
   // Render page
@@ -78,6 +84,7 @@ class App extends Component {
                   setActiveTest={this.setActiveTest}
                   fetchValues={this.fetchTestValues}
                   removeValues={this.removeTestValues}
+                  setGraphMeta={this.setGraphMeta}
                 />
               )}
             </ResourceRenderer>
@@ -98,7 +105,11 @@ class App extends Component {
                   onDismiss={() => this.setActiveTest(null)}
                 />
               )}
-              <GraphWrapper values={getLoadedValuesData(this.state)} />
+              <GraphWrapper
+                values={getLoadedValuesData(this.state)}
+                meta={getGraphMeta(this.state)}
+                setGraphMeta={this.setGraphMeta}
+              />
             </div>
 
             <LoadedValuesList

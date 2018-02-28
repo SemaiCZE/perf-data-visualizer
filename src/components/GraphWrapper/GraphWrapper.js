@@ -18,13 +18,6 @@ const getTimestamp = versionId => {
 };
 
 class GraphWrapper extends Component {
-  state = {
-    splitRuns: false,
-    graphType: 'scatter',
-    maxBins: 50,
-    hideLegend: false
-  };
-
   prepareNormalData(data) {
     return data.map(item => ({
       name: `${item.testId} - ${item.versionId}`,
@@ -52,11 +45,12 @@ class GraphWrapper extends Component {
   }
 
   render() {
-    const data = this.props.values;
+    const { values: data, meta, setGraphMeta } = this.props;
+
     return (
       <div className="responsive-plot-container">
         <Form inline className="pull-right">
-          {this.state.graphType === 'histogram' && (
+          {meta.graphType === 'histogram' && (
             <FormGroup>
               <ControlLabel>Max bins:</ControlLabel>
               &nbsp;
@@ -64,8 +58,8 @@ class GraphWrapper extends Component {
                 componentClass="input"
                 type="number"
                 min="1"
-                defaultValue={this.state.maxBins}
-                onChange={e => this.setState({ maxBins: e.target.value })}
+                value={meta.maxBins}
+                onChange={e => setGraphMeta({ maxBins: e.target.value })}
                 style={{ width: '80px' }}
               />
             </FormGroup>
@@ -75,9 +69,8 @@ class GraphWrapper extends Component {
             <ControlLabel>Hide legend:</ControlLabel>
             &nbsp;
             <Checkbox
-              onChange={e =>
-                this.setState({ hideLegend: !this.state.hideLegend })
-              }
+              onChange={e => setGraphMeta({ hideLegend: !meta.hideLegend })}
+              checked={meta.hideLegend}
             />
           </FormGroup>
           &nbsp;&nbsp;&nbsp;&nbsp;
@@ -85,9 +78,8 @@ class GraphWrapper extends Component {
             <ControlLabel>Split runs:</ControlLabel>
             &nbsp;
             <Checkbox
-              onChange={e =>
-                this.setState({ splitRuns: !this.state.splitRuns })
-              }
+              onChange={e => setGraphMeta({ splitRuns: !meta.splitRuns })}
+              checked={meta.splitRuns}
             />
           </FormGroup>
           &nbsp;&nbsp;&nbsp;&nbsp;
@@ -96,7 +88,8 @@ class GraphWrapper extends Component {
             &nbsp;
             <FormControl
               componentClass="select"
-              onChange={e => this.setState({ graphType: e.target.value })}
+              value={meta.graphType}
+              onChange={e => setGraphMeta({ graphType: e.target.value })}
             >
               <option value="scatter">Scatter</option>
               <option value="histogram">Histogram</option>
@@ -106,13 +99,13 @@ class GraphWrapper extends Component {
         </Form>
         <Graph
           data={
-            this.state.splitRuns
+            meta.splitRuns
               ? this.prepareSplitData(data)
               : this.prepareNormalData(data)
           }
-          type={this.state.graphType}
-          maxBins={this.state.maxBins}
-          hideLegend={this.state.hideLegend}
+          type={meta.graphType}
+          maxBins={meta.maxBins}
+          hideLegend={meta.hideLegend}
         />
       </div>
     );
@@ -120,7 +113,9 @@ class GraphWrapper extends Component {
 }
 
 GraphWrapper.propTypes = {
-  values: PropTypes.array
+  values: PropTypes.array,
+  setGraphMeta: PropTypes.func,
+  meta: PropTypes.object.isRequired
 };
 
 export default GraphWrapper;

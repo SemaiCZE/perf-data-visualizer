@@ -66,7 +66,8 @@ class SearchableList extends Component {
       fetchVersions,
       fetchValues,
       removeValues,
-      setActiveTest
+      setActiveTest,
+      setGraphMeta
     } = this.props;
 
     const groupButtonClass = 'groupButton';
@@ -160,6 +161,7 @@ class SearchableList extends Component {
           commonState={commonState}
           fetchVersions={fetchVersions}
           fetchValues={fetchValues}
+          setGraphMeta={setGraphMeta}
         />
       </div>
     );
@@ -172,7 +174,8 @@ SearchableList.propTypes = {
   fetchVersions: PropTypes.func,
   fetchValues: PropTypes.func,
   removeValues: PropTypes.func,
-  setActiveTest: PropTypes.func
+  setActiveTest: PropTypes.func,
+  setGraphMeta: PropTypes.func
 };
 
 export default SearchableList;

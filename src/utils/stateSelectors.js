@@ -47,3 +47,5 @@ export const getLoadedValuesData = state => {
   }
   return tests;
 };
+
+export const getGraphMeta = state => state.graphMeta;

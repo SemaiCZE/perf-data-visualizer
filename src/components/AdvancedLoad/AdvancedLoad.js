@@ -35,7 +35,13 @@ class AdvancedLoad extends Component {
   }
 
   render() {
-    const { isOpen, tests, fetchVersions, fetchValues } = this.props;
+    const {
+      isOpen,
+      tests,
+      fetchVersions,
+      fetchValues,
+      setGraphMeta
+    } = this.props;
 
     return (
       <Modal show={isOpen} onHide={() => this.onModalClose()} bsSize="large">
@@ -113,6 +119,9 @@ class AdvancedLoad extends Component {
                             )
                           )
                         )
+                        .then(() =>
+                          setGraphMeta({ graphType: 'box', hideLegend: true })
+                        )
                         .then(() => this.onModalClose())
                     }
                   >
@@ -138,6 +147,9 @@ class AdvancedLoad extends Component {
                               )
                           )
                         )
+                        .then(() =>
+                          setGraphMeta({ graphType: 'box', hideLegend: true })
+                        )
                         .then(() => this.onModalClose())
                     }
                   >
@@ -161,6 +173,9 @@ class AdvancedLoad extends Component {
                                 fetchValues(this.state.selectedTest, version.id)
                               )
                           )
+                        )
+                        .then(() =>
+                          setGraphMeta({ graphType: 'box', hideLegend: true })
                         )
                         .then(() => this.onModalClose())
                     }

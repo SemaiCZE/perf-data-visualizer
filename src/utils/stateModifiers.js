@@ -129,3 +129,12 @@ export const stateClearError = setState => () => setState({ error: null });
 
 export const stateSetActiveTest = setState => testId =>
   setState({ activeTestId: testId });
+
+export const stateSetGraphMeta = setState => meta =>
+  setState((prevState, props) => {
+    const newGraphMeta = prevState.graphMeta;
+    Object.keys(meta).forEach(key => {
+      newGraphMeta[key] = meta[key];
+    });
+    return { graphMeta: newGraphMeta };
+  });

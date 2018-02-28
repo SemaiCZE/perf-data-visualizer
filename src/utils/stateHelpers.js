@@ -17,7 +17,13 @@ export const initialState = {
   testVersions: {},
   testValues: {},
   error: null,
-  activeTestId: null
+  activeTestId: null,
+  graphMeta: {
+    splitRuns: false,
+    graphType: 'scatter',
+    maxBins: 50,
+    hideLegend: false
+  }
 };
 
 export const isEmpty = entry => !entry || entry.status === statusTypes.EMPTY;
