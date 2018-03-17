@@ -1,3 +1,4 @@
+/* global Plotly */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -5,7 +6,8 @@ import {
   FormGroup,
   FormControl,
   ControlLabel,
-  Checkbox
+  Checkbox,
+  Button
 } from 'react-bootstrap';
 import Graph from '../Graph/Graph';
 
@@ -96,6 +98,19 @@ class GraphWrapper extends Component {
               <option value="box">Box plot</option>
             </FormControl>
           </FormGroup>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <Button
+            onClick={() =>
+              Plotly.downloadImage(document.getElementById('plot'), {
+                filename: 'perfplot',
+                format: 'svg',
+                width: 1000,
+                height: 562
+              })
+            }
+          >
+            Save
+          </Button>
         </Form>
         <Graph
           data={
