@@ -12,6 +12,18 @@ class Graph extends Component {
   componentWillReceiveProps(newProps) {
     const { type, data, maxBins, hideLegend } = newProps;
 
+    const xAxisTitle = {
+      scatter: 'Iterations',
+      histogram: 'Measured values',
+      box: 'Test/Version index'
+    };
+
+    const yAxisTitle = {
+      scatter: 'Measured values',
+      histogram: 'Count',
+      box: 'Measured values'
+    };
+
     let plotData = [{ x: [], y: [] }];
     if (data.length > 0) {
       plotData = data
@@ -28,12 +40,7 @@ class Graph extends Component {
             data.x = item.values;
             data.nbinsx = maxBins;
           } else if (type === 'box') {
-            data.x0 =
-              item.timestamp !== 0
-                ? `${index}: ${new Date(
-                    item.timestamp * 1000
-                  ).toLocaleString()}`
-                : `${index}: –`;
+            data.x0 = `${index}`;
             data.y = item.values;
             data.jitter = 0.3;
             data.hoverinfo = 'x+y+z+text+name';
@@ -53,12 +60,15 @@ class Graph extends Component {
       plotData,
       {
         margin: {
-          t: 0,
-          r: 0,
-          l: 30
+          t: 30,
+          r: 30
         },
         xaxis: {
+          title: xAxisTitle[type],
           gridcolor: 'transparent'
+        },
+        yaxis: {
+          title: yAxisTitle[type]
         },
         showlegend: !hideLegend,
         legend: {
